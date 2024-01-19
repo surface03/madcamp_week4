@@ -65,7 +65,7 @@ router.post('/signup', async (req, res) => {
 //로그인
 router.get('/login', async (req, res) => {
   console.log('클라이언트에서 로그인 요청이 도착했습니다.');
-  const { id, password } = req.body;
+  const { id, password } = req.query;
   try {
     // 입력된 이메일과 비밀번호가 일치하는 사용자 확인
     const [user] = await db.execute('SELECT * FROM login.users WHERE id = ? AND password = ?', [id, password]);
