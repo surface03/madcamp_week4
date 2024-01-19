@@ -1,16 +1,26 @@
-var mysql      = require('mysql');
+var mysql = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'test',
-  password : 'test',
-  database : 'test'
+  host: '192.249.30.183', // This should be 'localhost', not 'local'
+  user: 'test',
+  password: 'test',
+  database: 'test'
 });
- 
-connection.connect();
- 
+
+connection.connect(function(error) {
+  if (error) {
+    console.error('Connection error: ', error);
+    return;
+  }
+  console.log('Connected to the database.');
+});
+
 connection.query('SELECT * from USER', function (error, results, fields) {
-  if (error) throw error;
-  console.log('users: ', results);
+  if (error) {
+    console.error('Query error: ', error);
+    return;
+  }
+  console.log('Users: ', results);
 });
- 
+
 connection.end();
+
