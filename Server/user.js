@@ -38,9 +38,11 @@ router.use(session({
 router.post('/signup', async (req, res) => {
     
     try {
-      const { id, name, age, password} = req.body;
+      // id(아이디)[PK], name(이름), age(나이), gender(성별), politicalOrientation(정치성향), password(비밀번호)
+      const { id, name, age, gender, politicalOrientation, password} = req.body;
 
-      console.log('데이터가 왔니?:', id, name, age, password)
+      console.log('데이터가 왔니?:', id, name, age, gender, politicalOrientation, password)
+
       // 아이디 중복 확인       --      table 정보 수정
       const [existingUser] = await db.execute('SELECT * FROM login.users WHERE id = ?', [id]);
       console.log('id 중복 확인 결과:', existingUser);
@@ -50,8 +52,8 @@ router.post('/signup', async (req, res) => {
         res.status(409).json({ error: '이미 존재하는 id입니다.' });
       } else {
         // 사용자 정보 삽입
-        await db.execute('INSERT INTO login.users (id, name, age, password) VALUES (?, ?, ?, ?)',
-        [id, name, age, password]);
+        await db.execute('INSERT INTO login.users (id, name, age, gender, politicalOrientation, password) VALUES (?, ?, ?, ?, ?, ?)',
+        [id, name, age, gender, politicalOrientation, password]);
         console.log('사용자 정보 기입 완료');
 
         res.json({ message: '회원가입이 완료되었습니다.' });
