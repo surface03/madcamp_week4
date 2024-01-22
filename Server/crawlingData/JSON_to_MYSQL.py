@@ -6,7 +6,7 @@ cnx = mysql.connector.connect(user='test2', password='password', host='172.10.7.
 cursor = cnx.cursor()
 
 # Path to your JSON file
-json_file_path = 'processed_articles_with_tags_total.json'
+json_file_path = 'merged_data.json'
 
 # Read the JSON file and insert each entry into the MySQL tables
 with open(json_file_path, 'r', encoding='utf-8') as file:
@@ -15,13 +15,13 @@ with open(json_file_path, 'r', encoding='utf-8') as file:
         try:
             # Insert article data
             article_insert_stmt = (
-                "INSERT INTO articles (uid, article_url, title_text, body_text, thumbnail, article_date, site_info, like_count, viewed_count) "
-                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                "INSERT INTO articles (uid, article_url, title_text, body_text, thumbnail, article_date, site_info, like_count, viewed_count, large_tag) "
+                "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
             )
             article_data_tuple = (
                 data['uid'], data['article_url'], data['title_text'], data['body_text'], 
                 data['thumbnail'], data['article_date'], data['site_info'], 
-                data['like_count'], data['viewed_count']
+                data['like_count'], data['viewed_count'], data['tags2']
             )
             cursor.execute(article_insert_stmt, article_data_tuple)
 
