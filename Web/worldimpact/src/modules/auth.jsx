@@ -1,3 +1,4 @@
+/*
 import {createAction, handleActions} from "redux-actions";
 
 const SAMPLE_ACTION = 'auth/SAMPLE_ACTION';
@@ -13,3 +14,4 @@ const auth = handleActions(
 );
 
 export default auth;
+*/
