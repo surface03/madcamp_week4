@@ -10,10 +10,12 @@ const cors = require('cors');
 const router = express.Router();
 const Filestore = require('session-file-store')(session);
 
-router.use(cors({
-  origin: 'http://localhost:5173', // 클라이언트의 주소
-  credentials: true,
-}));
+// 아래 내용은 쓰지 말자... 
+router.use(cors());
+// router.use(cors({
+//   origin: 'http://localhost:5174', // 클라이언트의 주소 - 다른 client 환경에서는 Axios error 발생시킬 수 있음
+//   credentials: true,
+// }));
 
 // 세션 설정
 router.use(session({
@@ -104,10 +106,50 @@ router.post('/logout', async (req, res) => {
   }
 });
 
-// 로그인 된 상태: 기사 클릭시, 클릭한 기사에 따른  tagid에 따른 count 횟수 증가시키기 (post)
-// router.post('logclick', async (req, res) => {
+// 로그인 된 상태: 기사 클릭시, 클릭한 기사에 따른  tagid에 따른 count 횟수 증가시키기 (post) ---- 성공!!!!
+router.post('/logclick', async (req, res) => {
+  const { user_id, article_uid } = req.body;
+  try {
+    // Check if the article exists -- 문제없음
+    const [articleExists] = await db.execute('SELECT uid FROM articles WHERE uid = ?', [article_uid]);
+    if (articleExists.length === 0) {
+      return res.status(404).json({ error: 'Article not found' });
+    } 
 
-// });
+    // Updated query with JOIN to fetch the tag ID (assuming it's represented by 'id' in 'unique_tags') -- 문제없음
+    const [articleTags] = await db.execute(`
+        SELECT ut.id AS tag_id
+        FROM article_tags at
+        JOIN unique_tags ut ON at.tag = ut.tag
+        WHERE at.article_uid = ?
+    `, [article_uid]);
+    // Log the fetched tag IDs for verification
+    console.log("Fetched article tag IDs:", articleTags.map(tag => tag.tag_id));
+    // If no tags are associated with the article, handle accordingly
+    if (articleTags.length === 0) {
+      return res.status(404).json({ error: 'No tags found for this article' });
+    }
+
+// Update user tag counts for each tag
+for (const tag of articleTags) {
+  // Use tag.tag_id which is the correct identifier
+  let tagId = tag.tag_id;  // Assuming tag_id is already an integer, no need for parseInt
+
+  const [existingCount] = await db.execute('SELECT count FROM user_tag_counts WHERE user_id = ? AND tag_id = ?', [user_id, tagId]);
+  
+  if (existingCount.length > 0) {
+    await db.execute('UPDATE user_tag_counts SET count = count + 1 WHERE user_id = ? AND tag_id = ?', [user_id, tagId]);
+  } else {
+    await db.execute('INSERT INTO user_tag_counts (user_id, tag_id, count) VALUES (?, ?, 1)', [user_id, tagId]);
+  }
+}
+    res.json({ message: 'Click logged successfully' });
+  } catch (error) {
+    console.error('Error logging click:', error);
+    res.status(500).json({ error: 'Server Error' });
+  }
+});
+
 
 
 module.exports = router;
