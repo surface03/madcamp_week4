@@ -1,0 +1,7 @@
+# Editor directories and files
+__pycache__
+chromedriver.exe
+LICENSE.chromedriver
+test.html
+.idea
+crawl_washington.py
