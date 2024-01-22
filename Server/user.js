@@ -1,7 +1,4 @@
 // 추가해야 할 것
-// 1] 로그인 된 상태: 기사 클릭시, 클릭한 기사에 따른  tagid에 따른 count 횟수 증가시키기 (post)
-// 2] 로그인 된 상태: 정치 성향 분석시, user가 클릭한 tagid와 count 횟수 쏴주기 (query)
-
 const express = require('express');
 const session = require('express-session');
 const db = require('./lib/db');
@@ -115,7 +112,6 @@ router.post('/logclick', async (req, res) => {
     if (articleExists.length === 0) {
       return res.status(404).json({ error: 'Article not found' });
     } 
-
     // Updated query with JOIN to fetch the tag ID (assuming it's represented by 'id' in 'unique_tags') -- 문제없음
     const [articleTags] = await db.execute(`
         SELECT ut.id AS tag_id
@@ -129,28 +125,47 @@ router.post('/logclick', async (req, res) => {
     if (articleTags.length === 0) {
       return res.status(404).json({ error: 'No tags found for this article' });
     }
+    // Update user tag counts for each tag
+    for (const tag of articleTags) {
+      // Use tag.tag_id which is the correct identifier
+      let tagId = tag.tag_id;  // Assuming tag_id is already an integer, no need for parseInt
+      const [existingCount] = await db.execute('SELECT count FROM user_tag_counts WHERE user_id = ? AND tag_id = ?', [user_id, tagId]);
+      if (existingCount.length > 0) {
+        await db.execute('UPDATE user_tag_counts SET count = count + 1 WHERE user_id = ? AND tag_id = ?', [user_id, tagId]);
+      } else {
+        await db.execute('INSERT INTO user_tag_counts (user_id, tag_id, count) VALUES (?, ?, 1)', [user_id, tagId]);
+      }
+    }
+        res.json({ message: 'Click logged successfully' });
+      } catch (error) {
+        console.error('Error logging click:', error);
+        res.status(500).json({ error: 'Server Error' });
+      }
+    });
 
-// Update user tag counts for each tag
-for (const tag of articleTags) {
-  // Use tag.tag_id which is the correct identifier
-  let tagId = tag.tag_id;  // Assuming tag_id is already an integer, no need for parseInt
+// 로그인 된 상태: // user_id를 보내면, user가 클릭한 tagid에 따른 tag명과 count 횟수 쏴주기 (query)
+router.get('/taglog', async (req, res) => {
+  const { user_id } = req.query;
 
-  const [existingCount] = await db.execute('SELECT count FROM user_tag_counts WHERE user_id = ? AND tag_id = ?', [user_id, tagId]);
-  
-  if (existingCount.length > 0) {
-    await db.execute('UPDATE user_tag_counts SET count = count + 1 WHERE user_id = ? AND tag_id = ?', [user_id, tagId]);
-  } else {
-    await db.execute('INSERT INTO user_tag_counts (user_id, tag_id, count) VALUES (?, ?, 1)', [user_id, tagId]);
-  }
-}
-    res.json({ message: 'Click logged successfully' });
+  try {
+    // Query to join user_tag_counts with unique_tags to get tag name and count
+    const [tagLogs] = await db.execute(`
+      SELECT ut.tag, utc.count
+      FROM user_tag_counts utc
+      JOIN unique_tags ut ON utc.tag_id = ut.id
+      WHERE utc.user_id = ?
+    `, [user_id]);
+
+    if (tagLogs.length === 0) {
+      return res.status(404).json({ error: 'No tag logs found for this user' });
+    }
+
+    res.json(tagLogs);
   } catch (error) {
-    console.error('Error logging click:', error);
+    console.error('Error fetching tag logs:', error);
     res.status(500).json({ error: 'Server Error' });
   }
 });
-
-
 
 module.exports = router;
 
