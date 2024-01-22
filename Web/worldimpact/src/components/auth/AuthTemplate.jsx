@@ -33,7 +33,7 @@ const WhiteBox = styled.div`
     }
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.025);
     padding: 2rem;
-    width: 360px;
+    width: 400px;
     background: white;
     border-radius: 2px;
 `;

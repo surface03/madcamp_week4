@@ -8,8 +8,10 @@ const RegisterPage = () => {
     const nevigate = useNavigate();
     const [formData, setFormData] = useState({
         id: '',
-        name: '1',      // 임시로 넣음
-        age: '1',       // 임시로 넣음
+        name: '',                      
+        age: '',                       
+        gender: '',                    
+        politicalOrientation: '',      
         password: '',
     });
 
@@ -19,6 +21,24 @@ const RegisterPage = () => {
             ...formData,
             [name]: value,
         });
+    };
+
+    const handleGenderChange = (event, newGender) => {
+        if (newGender !== null) {
+            setFormData({
+                ...formData,
+                gender: newGender,
+            });
+        }
+    };
+
+    const handlePoliticalChange = (event, newPoliticalOrientation) => {
+        if (newPoliticalOrientation !== null) {
+            setFormData({
+                ...formData,
+                politicalOrientation: newPoliticalOrientation,
+            });
+        }
     };
 
     const handleSubmit = async(e) => {
@@ -46,6 +66,8 @@ const RegisterPage = () => {
             type='register'
             formData={formData}
             onChange={handleChange}
+            onGenderChange={handleGenderChange}
+            onPoliticalChange={handlePoliticalChange}
             onSubmit={handleSubmit}
             />
         </AuthTemplate>
