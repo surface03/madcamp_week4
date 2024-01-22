@@ -1,3 +1,7 @@
+// 추가해야 할 것
+// 1] 로그인 된 상태: 기사 클릭시, 클릭한 기사에 따른  tagid에 따른 count 횟수 증가시키기 (post)
+// 2] 로그인 된 상태: 정치 성향 분석시, user가 클릭한 tagid와 count 횟수 쏴주기 (query)
+
 const express = require('express');
 const session = require('express-session');
 const db = require('./lib/db');
@@ -11,8 +15,6 @@ router.use(cors({
   credentials: true,
 }));
 
-// router.use(cors());
-
 // 세션 설정
 router.use(session({
   secret: 'your-secret-key', // 세션 암호화를 위한 키, 실제 프로젝트에서는 보안에 신경쓰고 설정해야 합니다.
@@ -20,19 +22,6 @@ router.use(session({
   saveUninitialized: true,
   store: new Filestore()
 }));
-
-//특정 email을 받았을 때 그 email을 가진 user의 data를 돌려주는 query
-// router.get('/getusers', async (req, res) => {   
-//     const email = req.query.email;
-//     try {
-//       const [rows, fields] = await db.execute('SELECT * FROM madcamp_week3.user_table WHERE email = ?', [email]);
-//       console.log('users에서 데이터 가져감', rows);
-//       res.json(rows);
-//     } catch (error) {
-//       console.error('쿼리 실행 중 에러:', error);
-//       res.status(500).json({ error: '서버 오류' });
-//     }
-//   });
 
 //회원가입
 router.post('/signup', async (req, res) => {
@@ -115,29 +104,11 @@ router.post('/logout', async (req, res) => {
   }
 });
 
+// 로그인 된 상태: 기사 클릭시, 클릭한 기사에 따른  tagid에 따른 count 횟수 증가시키기 (post)
+// router.post('logclick', async (req, res) => {
 
-// 업데이트
-// router.put('/updateuser', async (req, res) => {
-//   // 세션 또는 토큰에서 현재 로그인한 사용자의 정보를 가져옴
-//   const loggedInUserId = req.session.user_id; // 예시: 세션에서 userId를 가져오는 방법
-
-//   if (!loggedInUserId) {
-//       return res.status(401).json({ error: '로그인이 필요합니다.' });
-//   }
-
-//   const { username, email, password, gender, campus_info, yes_income, age } = req.body;
-  
-//   try {
-//       // userId에 해당하는 사용자 정보 업데이트
-//       await db.execute('UPDATE madcamp_week3.user_table SET username = ?, email = ?, password = ?, gender = ?, campus_info = ?, yes_income = ?, age = ? WHERE user_id = ?',
-//           [username, email, password, gender, campus_info, yes_income, age, loggedInUserId]);
-
-//       res.json({ message: '사용자 정보가 업데이트되었습니다.' });
-//   } catch (error) {
-//       console.error('사용자 정보 업데이트 중 에러:', error);
-//       res.status(500).json({ error: '서버 오류' });
-//   }
 // });
+
 
 module.exports = router;
 

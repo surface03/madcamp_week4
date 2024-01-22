@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const db = require('./lib/db');
 // const paymentRoutes = require('./payment');
 const userRoutes = require('./user');
+const newsRoutes = require('./news');   //
+
 const session = require('express-session');
 const Filestore = require('session-file-store')(session);
 
@@ -23,13 +25,10 @@ app.use(session({
 }));
 
 app.use(cors());
-// app.use(cors({
-//   origin: 'http://localhost:5173', // 클라이언트의 주소
-//   credentials: true,
-// }));
 
 // app.use('/payment', paymentRoutes);
 app.use('/user', userRoutes);
+app.use('/news', newsRoutes);
 
 // 라우팅
 app.get('/', (req, res) => {
