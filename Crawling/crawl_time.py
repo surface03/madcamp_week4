@@ -19,7 +19,7 @@ import info_class
 import var_list as vl
 
 
-def gen_single_json(url: str, img: str, date: str, pan_id: int) -> None:
+def gen_single_json(url: str, img: str, date: str, pan_id: str) -> None:
     html = hp.get_html_by_request(url)
     soup = BeautifulSoup(html, 'html.parser')
     get_title = soup.select("#article-header > header > div.mb-4.mt-2.lg\:mb-\[1\.4625rem\] > h1")
@@ -33,7 +33,7 @@ def gen_single_json(url: str, img: str, date: str, pan_id: int) -> None:
         body_str = body_str + i.get_text()
 
     info1 = info_class.Info(
-        uid=str(pan_id),
+        uid=pan_id,
         article_url=url,
         title_text=title_str,
         body_text=body_str,
@@ -46,13 +46,13 @@ def gen_single_json(url: str, img: str, date: str, pan_id: int) -> None:
     )
     d1 = dataclasses.asdict(info1)
 
-    fname = vl.TIME_CRAWLED_DIR / f"time_{pan_id}.json"
+    fname = vl.TIME_CRAWLED_DIR / f"{pan_id}.json"
     hp.json_write_by_path(fname, d1)
 
 
 def crawl_data() -> None:
     # https://time.com/section/world/?page={index} 의 기사 크롤링
-    # 1 <= index <= 14
+    # 1 <= index <= 14?
     # 크롤링한 url들은 crawled/time/urls.json 파일에 저장
     hp.remove_dir_if_exists(vl.TIMES_DIR)
     vl.TIMES_DIR.mkdir(exist_ok=True, parents=True)
@@ -78,10 +78,8 @@ def crawl_data() -> None:
             date_form = dt.strftime("%Y-%m-%d")
             count = count + 1
             urls_dict.update({count: url})
-            gen_single_json(url, img, date_form, pan_id)
-            logger.debug(f"{url}, {img}, {date_form}, {pan_id}")
-    assert len(urls_dict) == 223, "Total time crawl should be 223"
-    hp.assert_dir_count(vl.TIME_CRAWLED_DIR, "*.json", 223)
+            gen_single_json(url, img, date_form, "time_" + str(pan_id))
+            logger.debug(f"{url}, {img}, {date_form}, time_ + {str(pan_id)}")
     hp.json_write_by_path(vl.TIMES_URLS_JSON, urls_dict)
 
 

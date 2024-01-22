@@ -33,6 +33,7 @@ NAVER_CRAWLED_DIR = NAVER_DIR / "data"
 
 
 MERGED_CRAWLED_JSONL = CRAWLED_DIR / "articles.jsonl"
+PROCESSED_CRAWLED_JSONL = CRAWLED_DIR / "processed_articles.jsonl"
 
 
 def main() -> None:
