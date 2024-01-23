@@ -22,7 +22,7 @@ router.use(session({
   store: new Filestore()
 }));
 
-//회원가입
+//기능1] 회원가입
 router.post('/signup', async (req, res) => {
     
     try {
@@ -52,7 +52,7 @@ router.post('/signup', async (req, res) => {
     }
   });
 
-//로그인
+//기능2] 로그인
 router.get('/login', async (req, res) => {
   console.log('클라이언트에서 로그인 요청이 도착했습니다.');
   const { id, password } = req.query;
@@ -76,7 +76,7 @@ router.get('/login', async (req, res) => {
   }
 });
 
-// 로그아웃
+//기능3] 로그아웃
 router.post('/logout', async (req, res) => {
   try {
     // 현재 로그인된 사용자인지 확인
@@ -103,7 +103,7 @@ router.post('/logout', async (req, res) => {
   }
 });
 
-// 로그인 된 상태: 기사 클릭시, 클릭한 기사에 따른  tagid에 따른 count 횟수 증가시키기 (post) ---- 성공!!!!
+//기능4] 로그인 된 상태: 기사 클릭시, 클릭한 기사에 따른  tagid에 따른 count 횟수 증가시키기 (post) ---- 성공!!!!
 router.post('/logclick', async (req, res) => {
   console.log("Request Body: ", req.body); // Add this line
   const { user_id, article_uid } = req.body;
@@ -148,11 +148,7 @@ router.post('/logclick', async (req, res) => {
       }
     });
 
-
-
-    
-
-// 로그인 된 상태: // user_id를 보내면, user가 클릭한 tagid에 따른 tag명과 count 횟수 쏴주기 (query)
+//기능5] 로그인 된 상태: user_id를 보내면, user가 클릭한 tagid에 따른 tag명과 count 횟수 쏴주기 (query)
 router.get('/taglog', async (req, res) => {
   const { user_id } = req.query;
   try {
@@ -172,6 +168,24 @@ router.get('/taglog', async (req, res) => {
     res.status(500).json({ error: 'Server Error' });
   }
 });
+
+//기능6] 로그인 된 상태: user_id를 보내면, user에 대한 정보를 모두 보내주기
+router.get('/userInfo', async (req, res) => {
+  const { id } = req.query;
+  try {
+    const[user] = await db.execute('SELECT * FROM login.users WHERE id = ?', [id]);
+
+    if (user.length > 0) {
+      console.log('회원정보 가져오기 성공: ' + user[0].name);
+      res.json(user[0]);
+    } else {
+      res.status(401).json({ error: '일치하지 않습니다.' });
+    }
+  } catch (error) {
+    console.error('정보가져오는데:', error);
+    res.status(500).json({ error: '서버 오류' });
+  }
+}); 
 
 module.exports = router;
 
