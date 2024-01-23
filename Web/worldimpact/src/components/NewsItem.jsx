@@ -8,11 +8,11 @@ const NewsItem = ({ newsItem }) => {
       <Link to={`/news/${newsItem.id}`}>
         <img
           src={newsItem.thumbnail}
-          alt={newsItem.title}
-          style={{ width: "100%" }}
+          alt={newsItem.title_text}
+          style={{ width: "70%" }}
         />
-        <h3>{newsItem.title}</h3>
-        <p>{newsItem.date}</p>
+        <h3>{newsItem.title_text}</h3>
+        <p>{newsItem.article_date}</p>
       </Link>
     </div>
   );

@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter, Route, NavLink, Routes, Link } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
+import axios from "axios";
+
 // 대주제 예시 데이터
 export const exampleMainTopics = [
   { id: "1", name: "정치" },
@@ -55,158 +57,21 @@ export const exampleNews = [
     thumbnail: "https://mimgnews.pstatic.net/image/origin/011/2024/01/18/4288488.jpg?type=nf106_72",
     subTopics: ["1", "2"],
   },
-  {
-    id: "4",
-    title: "뉴스 제목 4",
-    date: "2024-01-05",
-    mainTopic: "테크",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/421/2024/01/18/7298438.jpg?type=nf106_72",
-    subTopics: ["1", "2"],
-  },
-  {
-    id: "5",
-    title: "뉴스 제목 5",
-    date: "2024-01-06",
-    mainTopic: "라이프",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254034.jpg?type=nf106_72",
-    subTopics: ["2"],
-  },
-  {
-    id: "6",
-    title: "뉴스 제목 6",
-    date: "2024-01-01",
-    mainTopic: "한국",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["1", "2", "3"],
-  },
-  {
-    id: "7",
-    title: "뉴스 제목 7",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["4", "5"],
-  },
-  {
-    id: "8",
-    title: "뉴스 제목 8",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["6"],
-  },
-  {
-    id: "9",
-    title: "뉴스 제목 9",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["3", "5"],
-  },
-  {
-    id: "10",
-    title: "뉴스 제목 10",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["4"],
-  },
-  {
-    id: "11",
-    title: "뉴스 제목 11",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["5"],
-  },
-  {
-    id: "12",
-    title: "뉴스 제목 12",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["1", "2", "3", "4", "5"],
-  },
-  {
-    id: "13",
-    title: "뉴스 제목 13",
-    date: "2024-01-11",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["3", "5"],
-  },
-  {
-    id: "14",
-    title: "뉴스 제목 14",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["1", "2"],
-  },
-  {
-    id: "15",
-    title: "뉴스 제목 15",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["1", "2"],
-  },
-  {
-    id: "16",
-    title: "뉴스 제목 16",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["1", "2"],
-  },
-  {
-    id: "17",
-    title: "뉴스 제목 17",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["1", "2"],
-  },
-  {
-    id: "18",
-    title: "뉴스 제목 18",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["1", "2"],
-  },
-  {
-    id: "19",
-    title: "뉴스 제목 19",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["1", "2"],
-  },
-  {
-    id: "20",
-    title: "뉴스 제목 20",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["1", "2"],
-  },
-  {
-    id: "21",
-    title: "뉴스 제목 21",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["1", "2"],
-  },
-  {
-    id: "22",
-    title: "뉴스 제목 22",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["1", "2"],
-  },
 ];
 
+// large_tag에 따른 newslist 반환
+export const fetchNewsByLargeTag = async (largeTag) => {
+  try {
+    // Fetch the news list for the given large tag from your server
+    const response = await axios.get(`http://localhost:3000/news/getLargeTag?large_tag=${largeTag}`);
 
+    // Assuming the response data is the list of articles
+    const articles = response.data;
+
+    return articles;
+
+  } catch (error) {
+    console.error('Error fetching news:', error);
+    return []; // Return an empty array in case of an error
+  }
+}

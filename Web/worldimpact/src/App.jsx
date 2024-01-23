@@ -10,7 +10,7 @@ import HeaderAppBar from './components/HeaderAppBar';
 import NewsDetail from './components/NewsDetail';
 import TopicTabs from './components/TopicTabs';
 import NewsGrid from './components/NewsGrid';
-import { exampleMainTopics, exampleSubTopics, exampleNews } from './ExampleData';
+import { exampleMainTopics, exampleSubTopics, exampleNews, fetchNewsByLargeTag } from './ExampleData';
 
 import './App.css';
 
@@ -30,6 +30,24 @@ const LayoutWithHeader = () => {
     setNews(exampleNews);
   }, []);
 
+
+  const handleTabChange = async (key) => {
+    try {
+      const topic = exampleMainTopics.find(topic => topic.id === key);
+      console.log('값', topic);
+      
+      if (topic && topic.name) {
+        const largeTagNews = await fetchNewsByLargeTag(topic.name);
+        setNews(largeTagNews);
+        setCurrentMainTopic(topic.name); // Update the currentMainTopic state
+      } else {
+        console.error('No topic found for the given key');
+      }
+    } catch (error) {
+      console.error('Failed to fetch news:', error);
+    }
+  };
+
   const loadMoreNews = () => {
     setVisibleNewsCount(prevCount => prevCount + 16);
   };
@@ -45,6 +63,7 @@ const LayoutWithHeader = () => {
         mainTopics={mainTopics}
         currentMainTopic={currentMainTopic}
         setCurrentMainTopic={setCurrentMainTopic}
+        onTabChange={handleTabChange}
       />
       <NewsGrid news={filteredNews} />
       {visibleNewsCount < news.length && (
