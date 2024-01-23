@@ -23,18 +23,19 @@ const LayoutWithHeader = () => {
   const [subTopics, setSubTopics] = useState([]);
   const [currentMainTopic, setCurrentMainTopic] = useState('all');
   const [news, setNews] = useState([]);
-  const [filteredNews, setfilteredNews] = useState([]);
+  //const [filteredNews, setfilteredNews] = useState([]);
   const [visibleNewsCount, setVisibleNewsCount] = useState(16);
 
   useEffect(() => {
     setMainTopics(exampleMainTopics);
     setSubTopics(exampleSubTopics);
     setNews(exampleNews);
-    setfilteredNews(exampleNews.slice(0, visibleNewsCount));
+    //setfilteredNews(exampleNews.slice(0, visibleNewsCount));
   }, []);
 
   useEffect(() => {
-    setfilteredNews(news.slice(0, visibleNewsCount));
+    setVisibleNewsCount(16);
+    //setfilteredNews(news.slice(0, visibleNewsCount));
     console.log(news);
   }, [news])
 
@@ -61,9 +62,7 @@ const LayoutWithHeader = () => {
     setVisibleNewsCount(prevCount => prevCount + 16);
   };
 
-  // const filteredNews = currentMainTopic === 'all'
-  //   ? news.slice(0, visibleNewsCount)
-  //   : news.filter(n => n.mainTopic === currentMainTopic).slice(0, visibleNewsCount);
+  const filteredNews = news.slice(0, visibleNewsCount)
 
   return (
     <>
