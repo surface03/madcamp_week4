@@ -1,23 +1,52 @@
 import React from "react";
-import { AppBar, Toolbar, IconButton } from "@mui/material";
-import { Link } from "react-router-dom";
+import { AppBar, Toolbar, IconButton, Tabs, Tab } from "@mui/material";
+import { Button } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../images/sample_logo.png";
 
-const HeaderAppBar = () => {
+import TopicTabs from "./TopicTabs";
+
+const HeaderAppBar = ({
+  mainTopics,
+  currentMainTopic,
+  setCurrentMainTopic,
+  onTabChange,
+}) => {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
+
+  const handleRegisterClick = () => {
+    navigate("/signup");
+  };
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="logo"
-          component={Link}
-          to="/"
-        >
-          <img src={Logo} alt="logo" style={{ height: "50px" }} />
-        </IconButton>
-      </Toolbar>
-    </AppBar>
+    <>
+      <div style={{ textAlign: "center", marginBottom: "10px" }}>
+        <Link to="/">
+          <img src={Logo} alt="Logo" style={{ cursor: "pointer" }} />
+        </Link>
+      </div>
+      <AppBar position="static">
+        <Toolbar>
+          <TopicTabs
+            mainTopics={mainTopics}
+            currentMainTopic={currentMainTopic}
+            setCurrentMainTopic={setCurrentMainTopic}
+            onTabChange={onTabChange}
+          />
+          <Button
+            type="primary"
+            style={{ marginLeft: "auto" }}
+            onClick={handleLoginClick}
+          >
+            Login
+          </Button>
+          <Button onClick={handleRegisterClick}>Register</Button>
+        </Toolbar>
+      </AppBar>
+    </>
   );
 };
 

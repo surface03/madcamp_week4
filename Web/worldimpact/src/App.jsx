@@ -31,7 +31,6 @@ const LayoutWithHeader = () => {
       try {
         const largeTagNews = await fetchNewsByLargeTag('all');
         setNews(largeTagNews);
-        setfilteredNews(largeTagNews.slice(0, visibleNewsCount));
       } catch (error) {
         console.error('Error fetching news:', error);
       }
@@ -82,13 +81,18 @@ const LayoutWithHeader = () => {
 
   return (
     <>
-      <HeaderAppBar />
-      <TopicTabs
+      <HeaderAppBar 
         mainTopics={mainTopics}
         currentMainTopic={currentMainTopic}
         setCurrentMainTopic={setCurrentMainTopic}
         onTabChange={handleTabChange}
       />
+      {/* <TopicTabs
+        mainTopics={mainTopics}
+        currentMainTopic={currentMainTopic}
+        setCurrentMainTopic={setCurrentMainTopic}
+        onTabChange={handleTabChange}
+      /> */}
       <NewsGrid news={filteredNews} />
       {visibleNewsCount < news.length && (
         <Button onClick={loadMoreNews}>더보기</Button>
