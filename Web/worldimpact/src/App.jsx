@@ -145,11 +145,11 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LayoutWithHeader />}>
           {/* <Route index element={<MainPage />} /> */}
-          <Route path="news/:newsId" element={<NewsDetail />} />
           <Route path="subtopics/:subTopicId" element={<SubTopicNews />} />
         </Route>
 
-        <Route path="/" element={<LayoutWithJustBar />}>
+        <Route path="/" element={<LayoutWithJustBar />}>    
+          <Route path="news/:uid" element={<NewsDetail />} />
           <Route path="/mypage" element={<MyPage />} />
         </Route>
 
