@@ -22,15 +22,18 @@ router.use(session({
   // 1] 특정 large_tag를 쏴주면, 그 large_tag를 가지는 기사들의 list or json파일을 쏴주는 data를 돌려주는 query
   router.get('/getLargeTag', async (req, res) => {
     const { large_tag } = req.query;
-  
     if (!large_tag) {
       return res.status(400).json({ error: 'Large tag is required' });
     }
-  
     try {
-      const query = 'SELECT * FROM articles WHERE large_tag = ? ORDER BY article_date DESC';
-      const [articles] = await db.execute(query, [large_tag]);
-  
+      let query;
+      if (large_tag === 'all') {
+        query = 'SELECT * FROM articles ORDER BY article_date DESC';
+      } else {
+        query = 'SELECT * FROM articles WHERE large_tag = ? ORDER BY article_date DESC';
+      }
+      const [articles] = await db.execute(query, large_tag === 'all' ? [] : [large_tag]);
+      //console.log(articles); // Logging the articles
       res.json(articles);
     } catch (error) {
       console.error('Error fetching articles:', error);
