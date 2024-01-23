@@ -10,6 +10,7 @@ import HeaderAppBar from './components/HeaderAppBar';
 import NewsDetail from './components/NewsDetail';
 import TopicTabs from './components/TopicTabs';
 import NewsGrid from './components/NewsGrid';
+import MyPage from './components/MyPage';
 import { exampleMainTopics, exampleSubTopics, exampleNews, fetchNewsByLargeTag } from './ExampleData';
 
 import './App.css';
@@ -91,8 +92,10 @@ const App = () => {
           {/* <Route index element={<MainPage />} /> */}
           <Route path="news/:newsId" element={<NewsDetail />} />
           <Route path="subtopics/:subTopicId" element={<SubTopicNews />} />
+          
 
         </Route>
+        <Route path="/mypage" element={<MyPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<RegisterPage />} />
 

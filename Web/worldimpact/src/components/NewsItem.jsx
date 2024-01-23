@@ -5,7 +5,7 @@ import { Tabs, Row, Col, Button } from "antd";
 const NewsItem = ({ newsItem }) => {
   return (
     <div>
-      <Link to={`/news/${newsItem.id}`}>
+      <Link to={`/news/${newsItem.uid}`}>
         <img
           src={newsItem.thumbnail}
           alt={newsItem.title_text}
