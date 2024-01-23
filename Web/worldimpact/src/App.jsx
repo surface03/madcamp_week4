@@ -10,6 +10,7 @@ import HeaderAppBar from './components/HeaderAppBar';
 import NewsDetail from './components/NewsDetail';
 import TopicTabs from './components/TopicTabs';
 import NewsGrid from './components/NewsGrid';
+import MyPage from './components/MyPage';
 import { exampleMainTopics, exampleSubTopics, exampleNews, fetchNewsByLargeTag } from './ExampleData';
 
 import './App.css';
@@ -22,13 +23,20 @@ const LayoutWithHeader = () => {
   const [subTopics, setSubTopics] = useState([]);
   const [currentMainTopic, setCurrentMainTopic] = useState('all');
   const [news, setNews] = useState([]);
+  const [filteredNews, setfilteredNews] = useState([]);
   const [visibleNewsCount, setVisibleNewsCount] = useState(16);
 
   useEffect(() => {
     setMainTopics(exampleMainTopics);
     setSubTopics(exampleSubTopics);
     setNews(exampleNews);
+    setfilteredNews(exampleNews.slice(0, visibleNewsCount));
   }, []);
+
+  useEffect(() => {
+    setfilteredNews(news.slice(0, visibleNewsCount));
+    console.log(news);
+  }, [news])
 
 
   const handleTabChange = async (key) => {
@@ -40,6 +48,7 @@ const LayoutWithHeader = () => {
         const largeTagNews = await fetchNewsByLargeTag(topic.name);
         setNews(largeTagNews);
         setCurrentMainTopic(topic.name); // Update the currentMainTopic state
+        console.log("topic name: ", topic.name);
       } else {
         console.error('No topic found for the given key');
       }
@@ -52,9 +61,9 @@ const LayoutWithHeader = () => {
     setVisibleNewsCount(prevCount => prevCount + 16);
   };
 
-  const filteredNews = currentMainTopic === 'all'
-    ? news.slice(0, visibleNewsCount)
-    : news.filter(n => n.mainTopic === currentMainTopic).slice(0, visibleNewsCount);
+  // const filteredNews = currentMainTopic === 'all'
+  //   ? news.slice(0, visibleNewsCount)
+  //   : news.filter(n => n.mainTopic === currentMainTopic).slice(0, visibleNewsCount);
 
   return (
     <>
@@ -83,8 +92,10 @@ const App = () => {
           {/* <Route index element={<MainPage />} /> */}
           <Route path="news/:newsId" element={<NewsDetail />} />
           <Route path="subtopics/:subTopicId" element={<SubTopicNews />} />
+          
 
         </Route>
+        <Route path="/mypage" element={<MyPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<RegisterPage />} />
 
