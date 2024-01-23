@@ -64,4 +64,27 @@ router.use(session({
     }
   });
 
+  // 3] 기사의 uid를 보내면, 기사의 모든 정보를 보내주는 query
+  router.get('/getAnArticle', async (req, res) => {
+    const { uid } = req.query;
+  
+    if (!uid) {
+      return res.status(400).json({ error: 'Article UID is required' });
+    }
+  
+    try {
+      const query = 'SELECT * FROM articles WHERE uid = ?';
+      const [articles] = await db.execute(query, [uid]);
+  
+      if (articles.length === 0) {
+        return res.status(404).json({ error: 'Article not found' });
+      }
+  
+      res.json(articles[0]);
+    } catch (error) {
+      console.error('Error fetching article:', error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  });
+
   module.exports = router;
