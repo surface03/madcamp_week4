@@ -44,7 +44,7 @@ const LoginPage = () => {
             setLoginStatus(true);
 
             // 로그인 성공시 다음 화면으로 넘어가게 하는 코드 
-            // navigate('/dashboard');
+            navigate('/');
 
 
         } catch (error) {

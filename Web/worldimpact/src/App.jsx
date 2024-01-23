@@ -31,7 +31,6 @@ const LayoutWithHeader = () => {
       try {
         const largeTagNews = await fetchNewsByLargeTag('all');
         setNews(largeTagNews);
-        setfilteredNews(largeTagNews.slice(0, visibleNewsCount));
       } catch (error) {
         console.error('Error fetching news:', error);
       }
@@ -120,3 +119,6 @@ const App = () => {
 };
 
 export default App;
+
+
+
