@@ -1,30 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Card, CardMedia, CardContent, Grid, List, ListItem } from '@mui/material';
-import { BrowserRouter as Router, Route, Link, useParams } from 'react-router-dom';
-import { Tabs, Row, Col, Button } from 'antd';
+import { useParams } from 'react-router-dom';
 
-const NewsDetail = ({ match }) => {
+const NewsDetail = () => {
   const { uid } = useParams(); // Get the uid parameter
   const [article, setArticle] = useState(null);
   const [clickedWords, setClickedWords] = useState([]);
 
   useEffect(() => {
-    // uid를 이용해서 Article을 받아오는 과정, 수정필요
-    /*
     const fetchArticle = async () => {
-      const response = await fetch(`/api/articles/${uid}`);
-      const data = await response.json();
-      setArticle(data);
+      try {
+        const response = await fetch(`http://localhost:3000/news/getAnArticle?uid=${uid}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setArticle({
+          picture: data.thumbnail, // assuming thumbnail URL is stored in the thumbnail field
+          title: data.title_text,
+          date: data.article_date,
+          body: data.body_text,
+        });
+      } catch (error) {
+        console.error('Error fetching article:', error);
+      }
     };
 
     fetchArticle();
-    */
-   setArticle({
-    picture: "https://us.123rf.com/450wm/aquir/aquir1906/aquir190606651/125693673-%EC%98%88%EC%8B%9C-%EC%8A%A4%ED%83%AC%ED%94%84-%EC%98%88-%EC%82%AC%EA%B0%81%ED%98%95-%EA%B7%B8%EB%9F%B0-%EC%A7%80-%EA%B8%B0%ED%98%B8%EC%9E%85%EB%8B%88%EB%8B%A4-%EC%98%88%EC%8B%9C.jpg",
-    title: "HIHIHIHIHIHIHIHIH",
-    date: "2023-11-11",
-    body: "sdnkjfsdfhiousfihdwegfys  797 98 n87 n wfhu ifus df ush ushodf \n dg sdfuis hsofd \nsdf",
-   });
   }, [uid]);
 
   const handleWordClick = (word) => {
