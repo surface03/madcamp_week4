@@ -27,11 +27,21 @@ const LayoutWithHeader = () => {
   const [visibleNewsCount, setVisibleNewsCount] = useState(16);
 
   useEffect(() => {
+    const fetchInitialNews = async () => {
+      try {
+        const largeTagNews = await fetchNewsByLargeTag('all');
+        setNews(largeTagNews);
+        setfilteredNews(largeTagNews.slice(0, visibleNewsCount));
+      } catch (error) {
+        console.error('Error fetching news:', error);
+      }
+    };
+
     setMainTopics(exampleMainTopics);
     setSubTopics(exampleSubTopics);
-    setNews(exampleNews);
-    //setfilteredNews(exampleNews.slice(0, visibleNewsCount));
+    fetchInitialNews();
   }, []);
+
 
   useEffect(() => {
     setVisibleNewsCount(16);
@@ -42,15 +52,21 @@ const LayoutWithHeader = () => {
 
   const handleTabChange = async (key) => {
     try {
+      console.log('값', key);
       const topic = exampleMainTopics.find(topic => topic.id === key);
-      console.log('값', topic);
-      
+
       if (topic && topic.name) {
         const largeTagNews = await fetchNewsByLargeTag(topic.name);
         setNews(largeTagNews);
         setCurrentMainTopic(topic.name); // Update the currentMainTopic state
         console.log("topic name: ", topic.name);
-      } else {
+      } else if(key === 'all') {
+        const largeTagNews = await fetchNewsByLargeTag('all');
+        setNews(largeTagNews);
+        setCurrentMainTopic('전체'); 
+
+      }
+      else {
         console.error('No topic found for the given key');
       }
     } catch (error) {
