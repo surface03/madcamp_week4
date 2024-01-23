@@ -105,6 +105,7 @@ router.post('/logout', async (req, res) => {
 
 // 로그인 된 상태: 기사 클릭시, 클릭한 기사에 따른  tagid에 따른 count 횟수 증가시키기 (post) ---- 성공!!!!
 router.post('/logclick', async (req, res) => {
+  console.log("Request Body: ", req.body); // Add this line
   const { user_id, article_uid } = req.body;
   
   console.log("Article uid", article_uid);
@@ -147,10 +148,13 @@ router.post('/logclick', async (req, res) => {
       }
     });
 
+
+
+    
+
 // 로그인 된 상태: // user_id를 보내면, user가 클릭한 tagid에 따른 tag명과 count 횟수 쏴주기 (query)
 router.get('/taglog', async (req, res) => {
   const { user_id } = req.query;
-
   try {
     // Query to join user_tag_counts with unique_tags to get tag name and count
     const [tagLogs] = await db.execute(`
@@ -159,11 +163,9 @@ router.get('/taglog', async (req, res) => {
       JOIN unique_tags ut ON utc.tag_id = ut.id
       WHERE utc.user_id = ?
     `, [user_id]);
-
     if (tagLogs.length === 0) {
       return res.status(404).json({ error: 'No tag logs found for this user' });
     }
-
     res.json(tagLogs);
   } catch (error) {
     console.error('Error fetching tag logs:', error);
