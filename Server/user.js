@@ -106,6 +106,10 @@ router.post('/logout', async (req, res) => {
 // 로그인 된 상태: 기사 클릭시, 클릭한 기사에 따른  tagid에 따른 count 횟수 증가시키기 (post) ---- 성공!!!!
 router.post('/logclick', async (req, res) => {
   const { user_id, article_uid } = req.body;
+  
+  console.log("Article uid", article_uid);
+  console.log("User id", user_id);
+
   try {
     // Check if the article exists -- 문제없음
     const [articleExists] = await db.execute('SELECT uid FROM articles WHERE uid = ?', [article_uid]);
