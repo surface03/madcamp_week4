@@ -1,7 +1,8 @@
 import mysql.connector
 
 # Connect to your MySQL database
-cnx = mysql.connector.connect(user='test2', password='password', host='172.10.7.52', port=80, database='login')
+# cnx = mysql.connector.connect(user='test2', password='password', host='172.10.7.52', port=80, database='login')
+cnx = mysql.connector.connect(user='root', password='0000', host='localhost', port=3306, database='login')
 cursor = cnx.cursor()
 
 # Retrieve data

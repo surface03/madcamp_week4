@@ -28,12 +28,20 @@ import {
 } from "./ExampleData";
 
 import Logo from "./images/sample_logo.png";
+import { useNavigate } from "react-router-dom";
 
 import "./App.css";
 
 const LayoutWithJustBar = () => {
+  const navigate = useNavigate();
   const gradientStyle = {
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+  };
+
+  const handleLogoutClick = () => {
+    // Implement logout logic here
+    sessionStorage.removeItem('user');
+    navigate("/");
   };
 
   return (
@@ -48,6 +56,7 @@ const LayoutWithJustBar = () => {
           <Button
             type="primary"
             style={{ marginLeft: "auto" }}
+            onClick={handleLogoutClick} // Attach the function to the Logout button
           >
             Logout
           </Button>
@@ -154,7 +163,7 @@ const App = () => {
         </Route>
 
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<RegisterPage />} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </BrowserRouter>
   );
