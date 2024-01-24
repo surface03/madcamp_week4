@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Link, useParams } from "react-router-dom";
 import { Tabs, Row, Col, Button } from "antd";
 import NewsItem from "./NewsItem";
+import { exampleMainTopics } from "../ExampleData";
+import { fetchNewsByLargeTag } from "../ExampleData";
 
 const NewsGrid = () => {
   const [news, setNews] = useState([]);
