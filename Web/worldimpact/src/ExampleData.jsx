@@ -31,33 +31,6 @@ export const exampleSubTopics = [
   { id: "11", name: "축구" },
 ];
 
-// 뉴스 예시 데이터
-export const exampleNews = [
-  {
-    id: "1",
-    title: "뉴스 제목 1",
-    date: "2024-01-01",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/016/2024/01/18/2254142.jpg?type=nf106_72",
-    subTopics: ["1", "2"],
-  },
-  {
-    id: "2",
-    title: "뉴스 제목 2",
-    date: "2024-01-02",
-    mainTopic: "경제",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/022/2024/01/18/3896013.jpg?type=nf106_72",
-    subTopics: ["2"],
-  },
-  {
-    id: "3",
-    title: "뉴스 제목 3",
-    date: "2024-01-08",
-    mainTopic: "정치",
-    thumbnail: "https://mimgnews.pstatic.net/image/origin/011/2024/01/18/4288488.jpg?type=nf106_72",
-    subTopics: ["1", "2"],
-  },
-];
 
 export const exampleNewsList = [
   {
@@ -192,3 +165,16 @@ export const fetchNewsByLargeTag = async (largeTag) => {
     return []; // Return an empty array in case of an error
   }
 }
+
+// 최다 언급된 tag 10개를 반환
+// export const fetchSubTopic = async() => {
+//   try{
+//     // Fetch the tag list for the most stated which contains 10
+//     const response = await axios.get('http://localhost:3000/news/mostStatedTag');
+//     const subTopiclist = response.data;
+//     return subTopiclist;
+//   } catch (error) {
+//     console.error('Error fetching subTopic lists:', error);
+//     return [];
+//   }
+// }

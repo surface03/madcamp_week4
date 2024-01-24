@@ -87,4 +87,56 @@ router.use(session({
     }
   });
 
+  // 4] 최다 언급된 tag를 많이 포함하는 기사 12개를 보내주는 query
+  router.get('/mostStatedArticle', async (req, res) => {
+    try {
+      // Step 1: Get the top 20 tags
+      const topTagsQuery = `
+        SELECT tag 
+        FROM unique_tags 
+        ORDER BY tag_count DESC 
+        LIMIT 30`;
+      const [topTags] = await db.execute(topTagsQuery);
+      //console.log([topTags]);
+    
+      // Extract tags for use in the next query
+      const tags = topTags.map(row => row.tag);
+      //console.log(tags);
+
+      // Step 2 and 3: Get 12 articles with the most overlapping tags
+      const placeholders = tags.map(() => '?').join(', '); // Creates a string of placeholders
+      const articlesQuery = `
+        SELECT a.*, COUNT(*) as tag_overlap 
+        FROM articles a
+        INNER JOIN article_tags at ON a.uid = at.article_uid
+        WHERE at.tag IN (${placeholders})
+        GROUP BY a.uid
+        ORDER BY tag_overlap DESC, a.article_date DESC
+        LIMIT 12`;
+      const [articles] = await db.execute(articlesQuery, tags);
+      //console.log([articles]);
+  
+      res.json(articles);
+    } catch (error) {
+      console.error('Error fetching most stated articles:', error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  });
+
+  // 5] 최다 언급된 tag 10개를 보내주는 query -- 성공
+  router.get('/mostStatedTag', async(req, res) => {
+    try{
+      const topTags = `
+      SELECT tag
+      FROM unique_tags
+      ORDER BY tag_count DESC
+      LIMIT 10`;
+      const [topTenTags] = await db.execute(topTags);
+      res.json(topTenTags) ;
+    } catch (error) {
+      console.error('Error fetching most stated tags:', error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  });
+
   module.exports = router;

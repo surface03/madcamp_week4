@@ -23,7 +23,6 @@ import MyPage from "./components/MyPage";
 import {
   exampleMainTopics,
   exampleSubTopics,
-  exampleNews,
   fetchNewsByLargeTag,
 } from "./ExampleData";
 
