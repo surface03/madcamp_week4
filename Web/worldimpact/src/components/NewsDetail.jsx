@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Card, CardMedia, CardContent, Grid, List, ListItem } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
+import Axios from 'axios';
+
 const NewsDetail = () => {
   const { uid } = useParams(); // Get the uid parameter
   const [article, setArticle] = useState(null);
@@ -27,7 +29,26 @@ const NewsDetail = () => {
     };
 
     fetchArticle();
-  }, [uid]);
+    const logClick = async () => {
+      try {
+        const userId = sessionStorage.getItem('user');
+        if (!userId) {
+          console.error('No user ID found in sessionStorage');
+          return;
+        }
+
+        const response = await Axios.post('http://localhost:3000/user/logclick', {
+          user_id: userId,
+          article_uid: uid
+        });
+    
+        console.log('Response from server:', response.data);
+      } catch (error) {
+        console.error('Error sending log click request:', error);
+      }
+    }
+    logClick();
+  }, []);
 
   const handleWordClick = (word) => {
     setClickedWords([...clickedWords, word]);

@@ -18,6 +18,10 @@ const HeaderAppBar = ({
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
   };
 
+  // Check if the user is logged in
+  const userId = sessionStorage.getItem('user');
+  const isLoggedIn = userId !== null;
+
   const handleLoginClick = () => {
     navigate("/login");
   };
@@ -25,6 +29,17 @@ const HeaderAppBar = ({
   const handleRegisterClick = () => {
     navigate("/signup");
   };
+
+  const handleLogoutClick = () => {
+    // Implement logout logic here
+    sessionStorage.removeItem('user');
+    navigate("/");
+  };
+
+  const handleMyPageClick = () => {
+    navigate("/mypage"); // Replace with actual mypage route
+  };
+
   return (
     <>
       <div style={{ textAlign: "center", marginBottom: "10px" }}>
@@ -40,14 +55,34 @@ const HeaderAppBar = ({
             setCurrentMainTopic={setCurrentMainTopic}
             onTabChange={onTabChange}
           />
-          <Button
-            type="primary"
-            style={{ marginLeft: "auto" }}
-            onClick={handleLoginClick}
-          >
-            Login
-          </Button>
-          <Button onClick={handleRegisterClick}>Register</Button>
+
+          {isLoggedIn ? (
+            <>
+              <Button
+                type="primary"
+                style={{ marginLeft: "auto" }}
+                onClick={handleLogoutClick}
+              >
+                Logout
+              </Button>
+              <Button onClick={handleMyPageClick}>
+                My Page
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                type="primary"
+                style={{ marginLeft: "auto" }}
+                onClick={handleLoginClick}
+              >
+                Login
+              </Button>
+              <Button onClick={handleRegisterClick}>
+                Register
+              </Button>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </>

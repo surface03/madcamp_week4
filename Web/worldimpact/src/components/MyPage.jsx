@@ -105,9 +105,12 @@ const MyPage = () => {
 
   useEffect(() => {
     if (tagLogs.length > 0) {
-      const categories = tagLogs.map(log => log.tag);
-      const data = tagLogs.map(log => log.count);
-
+      // Sort tagLogs by count in descending order and take the top 5
+      const sortedTagLogs = [...tagLogs].sort((a, b) => b.count - a.count).slice(0, 10);
+  
+      const categories = sortedTagLogs.map(log => log.tag);
+      const data = sortedTagLogs.map(log => log.count);
+  
       chartInstance.current.updateOptions({
         series: [{
           name: 'Tag Count',
