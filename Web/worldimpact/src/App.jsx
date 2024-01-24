@@ -67,82 +67,32 @@ const LayoutWithJustBar = () => {
 };
 
 const LayoutWithHeader = () => {
+  //const [filteredNews, setfilteredNews] = useState([]);
   const [mainTopics, setMainTopics] = useState([]);
   const [subTopics, setSubTopics] = useState([]);
-  const [currentMainTopic, setCurrentMainTopic] = useState("all");
-  const [news, setNews] = useState([]);
-  //const [filteredNews, setfilteredNews] = useState([]);
-  const [visibleNewsCount, setVisibleNewsCount] = useState(16);
 
   useEffect(() => {
-    const fetchInitialNews = async () => {
-      try {
-        const largeTagNews = await fetchNewsByLargeTag("all");
-        setNews(largeTagNews);
-      } catch (error) {
-        console.error("Error fetching news:", error);
-      }
-    };
-
     setMainTopics(exampleMainTopics);
     setSubTopics(exampleSubTopics);
-    fetchInitialNews();
   }, []);
 
-  useEffect(() => {
-    setVisibleNewsCount(16);
-    //setfilteredNews(news.slice(0, visibleNewsCount));
-    console.log(news);
-  }, [news]);
-
-  const handleTabChange = async (key) => {
-    try {
-      console.log("값", key);
-      const topic = exampleMainTopics.find((topic) => topic.id === key);
-
-      if (topic && topic.name) {
-        const largeTagNews = await fetchNewsByLargeTag(topic.name);
-        setNews(largeTagNews);
-        setCurrentMainTopic(topic.name); // Update the currentMainTopic state
-        console.log("topic name: ", topic.name);
-      } else if (key === "all") {
-        const largeTagNews = await fetchNewsByLargeTag("all");
-        setNews(largeTagNews);
-        setCurrentMainTopic("전체");
-      } else {
-        console.error("No topic found for the given key");
-      }
-    } catch (error) {
-      console.error("Failed to fetch news:", error);
-    }
-  };
-
-  const loadMoreNews = () => {
-    setVisibleNewsCount((prevCount) => prevCount + 16);
-  };
-
-  const filteredNews = news.slice(0, visibleNewsCount);
 
   return (
     <>
       <HeaderAppBar
         mainTopics={mainTopics}
-        currentMainTopic={currentMainTopic}
-        setCurrentMainTopic={setCurrentMainTopic}
-        onTabChange={handleTabChange}
       />
+      <Outlet />
       {/* <TopicTabs
         mainTopics={mainTopics}
         currentMainTopic={currentMainTopic}
         setCurrentMainTopic={setCurrentMainTopic}
         onTabChange={handleTabChange}
       /> */}
-      <NewsGrid news={filteredNews} />
-      {visibleNewsCount < news.length && (
-        <Button onClick={loadMoreNews}>더보기</Button>
-      )}
+
+      
+      {/* <NewsGrid news={filteredNews} /> */}
       <TopSubTopics subTopics={subTopics} />
-      <Outlet />
     </>
   );
 };
@@ -153,6 +103,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LayoutWithHeader />}>
           {/* <Route index element={<MainPage />} /> */}
+          <Route path="tab/:tabkey" element={<NewsGrid />} />
           <Route path="subtopics/:tagUid" element={<SubTopicNews />} />
         </Route>
 
