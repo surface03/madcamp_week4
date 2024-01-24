@@ -112,6 +112,33 @@ router.use(session({
     }
   });
 
+  // 3-1] 기사의 uid를 보내면, 기사에 해당하는 모든 tag와 이에 따른 id (from unique_tags) 보내주기
+  router.get('/getAllTagsOfArticle', async (req, res) => {
+    const { uid } = req.query;
+  
+    if (!uid) {
+      return res.status(400).json({ error: 'Article UID is required' });
+    }
+  
+    try {
+      const query = `
+        SELECT ut.id, ut.tag FROM unique_tags ut
+        INNER JOIN article_tags at ON ut.tag = at.tag
+        WHERE at.article_uid = ?`;
+  
+      const [tags] = await db.execute(query, [uid]);
+  
+      if (tags.length === 0) {
+        return res.status(404).json({ error: 'No tags found for this article' });
+      }
+  
+      res.json(tags);
+    } catch (error) {
+      console.error('Error fetching tags for the article:', error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  });
+
   // 4] 최다 언급된 tag를 많이 포함하는 기사 12개를 보내주는 query
   router.get('/mostStatedArticle', async (req, res) => {
     try {
