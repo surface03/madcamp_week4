@@ -8,8 +8,8 @@ import { Tabs, Row, Col, Button as AntButton } from "antd";
 import ApexCharts from 'apexcharts';
 
 // GPT 연동
-//import OpenAI from 'openai';
-//const openai = new OpenAI({apiKey: import.meta.env.VITE_OPENAI_API_KEY, dangerouslyAllowBrowser: true});
+import OpenAI from 'openai';
+const openai = new OpenAI({apiKey: import.meta.env.VITE_OPENAI_API_KEY, dangerouslyAllowBrowser: true});
 
 const MyPage = () => {
   const [user, setUser] = useState({
@@ -124,7 +124,6 @@ const MyPage = () => {
   }, [tagLogs]);
 
   // ChatGPT 연동
-  // const [gptResponse, setGptResponse] = useState('');
   const handleButtonClick = async () => {
     
     // 해결해야할 문제: randomText 설정 어떻게?? 음... json파일 넣어버리고, user 정보 넣어버리고, 중립을 지키기 위해서 나의 성향과 어떤 방향으로 기사를 읽어야 하는지 알려달라하면 되남??? 
@@ -133,7 +132,7 @@ const MyPage = () => {
         messages: [{ role: "system", content: randomText }],
         model: "gpt-3.5-turbo",
       });
-    setGptResponse(completion.choices[0].message.content);
+    setRandomText(completion.choices[0].message.content);
   };
 
   return (
