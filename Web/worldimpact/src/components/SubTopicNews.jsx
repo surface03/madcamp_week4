@@ -5,37 +5,36 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import NewsItem from './NewsItem';
 
 import { exampleNewsList } from '../ExampleData';
+import axios from '../../node_modules/axios/index';
 
 const SubTopicNews = () => {
   const { tagUid } = useParams();
   const [newsItems, setNewsItems] = useState([]);
+  console.log(tagUid);
 
   // 처음에 8개 아이템이 보이는데 수정가능
   const [displayCount, setDisplayCount] = useState(9);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // const loadNews = async () => {
-    //   setLoading(true);
-    //   try {
-    //     // 여기서 db에서 뉴스 리스트 받기, tagUid 사용
-    //     //const fetchedNews = {} 이런식으로 초기화
-
-    //     setNewsItems(fetchedNews);
-    //   } catch (error) {
-    //     console.error('Error fetching news:', error);
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
-    // loadNews();
-
-    // db 연동 성공하면 지워야 되는 코드
-    console.log('RANDOM DEBUG MESSAGE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    setNewsItems(exampleNewsList);
-    setLoading(false);
-    setDisplayCount(9);
-  }, [tagUid]);
+    const loadNews = async (tagUid) => {
+      setLoading(true);
+      try {
+        // Correctly format the URL to include tagUid as a query parameter
+        const response = await axios.get(`http://localhost:3000/news/getDetailedTagById?tag_id=${tagUid}`);
+        const articles = response.data;
+        setNewsItems(articles);
+      } catch (error) {
+        console.error('Error fetching news:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    if (tagUid) { // Only call loadNews if tagUid is available
+      loadNews(tagUid);
+    }
+  }, [tagUid]); // Dependency array includes tagUid
 
   const handleShowMore = () => {
     setDisplayCount((prevCount) => prevCount + 6);
