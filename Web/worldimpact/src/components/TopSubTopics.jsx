@@ -6,8 +6,8 @@ import axios from "axios";
 const fetchSubTopic = async () => {
   try {
     const response = await axios.get('http://localhost:3000/news/mostStatedTag');
-    return response.data.map((item, index) => ({
-      id: String(index + 1), // Assuming you want to generate an id
+    return response.data.map(item => ({
+      id: String(item.id), // Assuming you want to generate an id
       name: item.tag
     }));
   } catch (error) {
@@ -32,11 +32,15 @@ const TopSubTopics = () => {
       <h2>Top 10 소주제</h2>
       {subTopics.slice(0, 10).map((subTopic) => (
         <Button key={subTopic.id}>
-          <Link to={`/subtopics/${subTopic.id}`}>{subTopic.name}</Link>
+          <Link to={{ 
+              pathname: `/subtopics/${subTopic.id}`, 
+              state: { subTopicName: subTopic.name}
+          }}>
+              {subTopic.name}
+          </Link>
         </Button>
       ))}
     </div>
   );
 };
-
 export default TopSubTopics;

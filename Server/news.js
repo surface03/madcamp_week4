@@ -64,6 +64,31 @@ router.use(session({
     }
   });
 
+  // 2-2] unique_tags Table의 id를 쏴주면, 그 tag를 가지는 기사들의 list or json파일을 쏴주는 data를 돌려주는 query
+  router.get('/getDetailedTagById', async (req, res) => {
+    const { tag_id } = req.query;
+  
+    if (!tag_id) {
+      return res.status(400).json({ error: 'Tag ID is required' });
+    }
+  
+    try {
+      const query = `
+        SELECT a.* FROM articles a
+        INNER JOIN article_tags at ON a.uid = at.article_uid
+        INNER JOIN unique_tags ut ON at.tag = ut.tag
+        WHERE ut.id = ? ORDER BY a.article_date ASC`;  // Changed DESC to ASC
+  
+      const [articles] = await db.execute(query, [tag_id]);
+  
+      res.json(articles);
+    } catch (error) {
+      console.error('Error fetching articles by tag ID:', error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  });
+
+
   // 3] 기사의 uid를 보내면, 기사의 모든 정보를 보내주는 query
   router.get('/getAnArticle', async (req, res) => {
     const { uid } = req.query;
@@ -125,14 +150,14 @@ router.use(session({
 
   // 5] 최다 언급된 tag 10개를 보내주는 query -- 성공
   router.get('/mostStatedTag', async(req, res) => {
-    try{
-      const topTags = `
-      SELECT tag
+    try {
+      const topTagsQuery = `
+      SELECT id, tag
       FROM unique_tags
       ORDER BY tag_count DESC
       LIMIT 10`;
-      const [topTenTags] = await db.execute(topTags);
-      res.json(topTenTags) ;
+      const [topTenTags] = await db.execute(topTagsQuery);
+      res.json(topTenTags);
     } catch (error) {
       console.error('Error fetching most stated tags:', error);
       res.status(500).json({ error: 'Server error' });
