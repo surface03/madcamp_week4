@@ -145,7 +145,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LayoutWithHeader />}>
           {/* <Route index element={<MainPage />} /> */}
-          <Route path="subtopics/:subTopicId" element={<SubTopicNews />} />
+          <Route path="subtopics/:tagUid" element={<SubTopicNews />} />
         </Route>
 
         <Route path="/" element={<LayoutWithJustBar />}>    
