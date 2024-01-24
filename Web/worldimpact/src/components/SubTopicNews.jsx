@@ -34,6 +34,7 @@ const SubTopicNews = () => {
     console.log('RANDOM DEBUG MESSAGE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     setNewsItems(exampleNewsList);
     setLoading(false);
+    setDisplayCount(9);
   }, [tagUid]);
 
   const handleShowMore = () => {

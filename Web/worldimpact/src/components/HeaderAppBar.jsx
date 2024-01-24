@@ -8,9 +8,6 @@ import TopicTabs from "./TopicTabs";
 
 const HeaderAppBar = ({
   mainTopics,
-  currentMainTopic,
-  setCurrentMainTopic,
-  onTabChange,
 }) => {
   const navigate = useNavigate();
 
@@ -51,9 +48,6 @@ const HeaderAppBar = ({
         <Toolbar>
           <TopicTabs
             mainTopics={mainTopics}
-            currentMainTopic={currentMainTopic}
-            setCurrentMainTopic={setCurrentMainTopic}
-            onTabChange={onTabChange}
           />
 
           {isLoggedIn ? (
