@@ -59,6 +59,123 @@ export const exampleNews = [
   },
 ];
 
+export const exampleNewsList = [
+  {
+    uid: "naver_1008",
+    title_text: "GDP 등 통계 신뢰성에 의문…개도국 데이터 조작 심각",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/001/2024/01/18/14452453.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1009",
+    title_text: "네타냐후, 사우디와 관계정상화하라는 미국 제안 거부…커지는 미-이 갈등",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/028/2024/01/18/2673347.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1010",
+    title_text: "GDP 등 통계 신뢰성에 의문…개도국 데이터 조작 심각",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/001/2024/01/18/14452453.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1011",
+    title_text: "네타냐후, 사우디와 관계정상화하라는 미국 제안 거부…커지는 미-이 갈등",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/028/2024/01/18/2673347.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1012",
+    title_text: "GDP 등 통계 신뢰성에 의문…개도국 데이터 조작 심각",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/001/2024/01/18/14452453.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1013",
+    title_text: "네타냐후, 사우디와 관계정상화하라는 미국 제안 거부…커지는 미-이 갈등",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/028/2024/01/18/2673347.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1014",
+    title_text: "GDP 등 통계 신뢰성에 의문…개도국 데이터 조작 심각",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/001/2024/01/18/14452453.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1015",
+    title_text: "네타냐후, 사우디와 관계정상화하라는 미국 제안 거부…커지는 미-이 갈등",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/028/2024/01/18/2673347.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1016",
+    title_text: "GDP 등 통계 신뢰성에 의문…개도국 데이터 조작 심각",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/001/2024/01/18/14452453.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1017",
+    title_text: "네타냐후, 사우디와 관계정상화하라는 미국 제안 거부…커지는 미-이 갈등",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/028/2024/01/18/2673347.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1018",
+    title_text: "GDP 등 통계 신뢰성에 의문…개도국 데이터 조작 심각",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/001/2024/01/18/14452453.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1019",
+    title_text: "네타냐후, 사우디와 관계정상화하라는 미국 제안 거부…커지는 미-이 갈등",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/028/2024/01/18/2673347.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1020",
+    title_text: "GDP 등 통계 신뢰성에 의문…개도국 데이터 조작 심각",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/001/2024/01/18/14452453.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1021",
+    title_text: "네타냐후, 사우디와 관계정상화하라는 미국 제안 거부…커지는 미-이 갈등",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/028/2024/01/18/2673347.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1022",
+    title_text: "GDP 등 통계 신뢰성에 의문…개도국 데이터 조작 심각",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/001/2024/01/18/14452453.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1023",
+    title_text: "네타냐후, 사우디와 관계정상화하라는 미국 제안 거부…커지는 미-이 갈등",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/028/2024/01/18/2673347.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1024",
+    title_text: "GDP 등 통계 신뢰성에 의문…개도국 데이터 조작 심각",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/001/2024/01/18/14452453.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1025",
+    title_text: "네타냐후, 사우디와 관계정상화하라는 미국 제안 거부…커지는 미-이 갈등",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/028/2024/01/18/2673347.jpg?type=nf106_72",
+  },
+  {
+    uid: "naver_1026",
+    title_text: "GDP 등 통계 신뢰성에 의문…개도국 데이터 조작 심각",
+    article_date: "2024-01-08",
+    thumbnail: "https://mimgnews.pstatic.net/image/origin/001/2024/01/18/14452453.jpg?type=nf106_72",
+  },
+];
+
 // large_tag에 따른 newslist 반환
 export const fetchNewsByLargeTag = async (largeTag) => {
   try {
