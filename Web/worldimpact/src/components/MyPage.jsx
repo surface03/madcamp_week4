@@ -127,7 +127,7 @@ const MyPage = () => {
   const handleButtonClick = async () => {
     
     // 해결해야할 문제: randomText 설정 어떻게?? 음... json파일 넣어버리고, user 정보 넣어버리고, 중립을 지키기 위해서 나의 성향과 어떤 방향으로 기사를 읽어야 하는지 알려달라하면 되남??? 
-    const randomText = ''; // 랜덤 텍스트 생성 로직 추가
+    const randomText = '집에 보내줘...'; // 랜덤 텍스트 생성 로직 추가
     const completion = await openai.chat.completions.create({
         messages: [{ role: "system", content: randomText }],
         model: "gpt-3.5-turbo",
