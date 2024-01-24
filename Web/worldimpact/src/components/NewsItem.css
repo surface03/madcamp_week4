@@ -1,0 +1,23 @@
+.news-card {
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.news-card:hover {
+    transform: scale(1.05);
+}
+
+.news-image-container {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+.news-image {
+    width: 70%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+}
+
+.news-content {
+    text-align: left;
+}
