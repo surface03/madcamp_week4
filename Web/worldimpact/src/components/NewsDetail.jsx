@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Card, CardMedia, CardContent, Grid, List, ListItem } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
+import { Tabs, Row, Col, Button as AntButton} from 'antd';
 import Axios from 'axios';
+
+// GPT 연동
+import OpenAI from 'openai';
+const openai = new OpenAI({apiKey: import.meta.env.VITE_OPENAI_API_KEY, dangerouslyAllowBrowser: true});
+
 
 const NewsDetail = () => {
   const { uid } = useParams();
@@ -53,24 +59,57 @@ const NewsDetail = () => {
   }, [uid]);
 
   const handleWordClick = (word) => {
-    const newClickedWords = [...clickedWords, word];
-    setClickedWords(newClickedWords);
+    // Check if the word is already in the clickedWords array
+    if (!clickedWords.includes(word)) {
+      const newClickedWords = [...clickedWords, word];
+      setClickedWords(newClickedWords);
   
-    // Log the updated clickedWords array to the console
-    console.log('Clicked Words:', newClickedWords);
-
+      // Log the updated clickedWords array to the console
+      console.log('Clicked Words:', newClickedWords);
+    }
+  
     setSelectedWord(word);
     fetchWordInfo(word);
   };
   
-
-  // 여기에 GPT 용어에 대한 해석을 보여주면 될듯??
+  ///////////////////////////////////////////////
+  // 여기에 GPT 용어에 대한 해석을 보여주면 될듯??//
+  ///////////////////////////////////////////////
   const fetchWordInfo = async (word) => {
     // Placeholder for fetching word information
     // Replace this with your actual logic to fetch word info
     const info = `Information about ${word}`;
     setWordInfo(info);
-  };  
+  };
+
+  const handleButtonClick = async () => {
+    console.log('GPT 실행');
+
+    const newsTitle = article.title;
+    const newsBodyText = article.body;
+    const term = selectedWord;
+
+    // Construct the request payload
+    const payload = {
+      messages: [
+        { 
+          role: "system", 
+          content: `${newsTitle}\n${newsBodyText}\n\nThe term "${term}" was selected. Can you provide a description of this term in the context of the article above?\nPlease answer in Korean.` 
+        }
+      ],
+      model: "gpt-3.5-turbo",
+    };
+
+    // Send the request
+    try {
+      const completion = await openai.chat.completions.create(payload);
+      setWordInfo(completion.choices[0].message.content);
+      console.log(completion.choices[0].message.content);
+    } catch (error) {
+      console.error('Error with OpenAI:', error);
+      setWordInfo("Sorry, there was an error processing your request.");
+    }
+  };
 
 
   const renderBody = (body) => {
@@ -127,6 +166,7 @@ const NewsDetail = () => {
         {selectedWord && (
           <Card sx={{ maxWidth: 300, margin: 'auto', marginTop: 2 }}>
             <CardContent>
+            <AntButton onClick={handleButtonClick}>용어 설명</AntButton>
               <Typography variant="h6" gutterBottom>
                 Info about "{selectedWord}"
               </Typography>
