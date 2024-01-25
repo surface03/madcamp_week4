@@ -49,7 +49,7 @@ const HeaderAppBar = ({
         <Toolbar>
           <TopicTabs
             mainTopics={mainTopics}
-            style={{ marginLeft: '100px' }}
+            style={{ marginLeft: '50px' }}
           />
 
           {isLoggedIn ? (

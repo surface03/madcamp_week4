@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Link, useNavigate, useLocation } from "react-router-dom";
 import { Tabs, Row, Col, Button } from "antd";
+import './TopicTabs.css';
 
 const TopicTabs = ({
   mainTopics,
@@ -45,6 +46,7 @@ const TopicTabs = ({
         })),
       ]}
       style={style}
+      className="custom-tabs"
     />
   );
 };
