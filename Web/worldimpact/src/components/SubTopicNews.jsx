@@ -103,7 +103,7 @@ const SubTopicNews = () => {
       <Row gutter={[16, 16]}>
         {displayedNews.map((newsItem, index) => (
           <React.Fragment key={newsItem.uid}>
-            <Col span={7}>
+            <Col span={6}>
               <NewsItem newsItem={newsItem} />
             </Col>
             {index < displayedNews.length - 1 && (

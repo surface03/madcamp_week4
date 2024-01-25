@@ -10,7 +10,7 @@ import {
   Outlet,
 } from "react-router-dom";
 import { Tabs, Row, Col, Button } from "antd";
-import { AppBar, Toolbar, IconButton, Tab } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Tab, Box } from "@mui/material";
 
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -22,6 +22,7 @@ import TopicTabs from "./components/TopicTabs";
 import NewsGrid from "./components/NewsGrid";
 import MyPage from "./components/MyPage";
 import MainPage from "./components/MainPage";
+import KeywordList from "./components/KeyWordList";
 import {
   exampleMainTopics,
   exampleSubTopics,
@@ -38,6 +39,7 @@ const LayoutWithJustBar = () => {
   const navigate = useNavigate();
   const gradientStyle = {
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    width: '1234px'
   };
 
   const handleLogoutClick = () => {
@@ -82,22 +84,15 @@ const LayoutWithHeader = () => {
 
 
   return (
-    <>
-      <HeaderAppBar
-        mainTopics={mainTopics}
-      />
-      <Outlet />
-      {/* <TopicTabs
-        mainTopics={mainTopics}
-        currentMainTopic={currentMainTopic}
-        setCurrentMainTopic={setCurrentMainTopic}
-        onTabChange={handleTabChange}
-      /> */}
-
-      
-      {/* <NewsGrid news={filteredNews} /> */}
-      <TopSubTopics subTopics={subTopics} />
-    </>
+    <Box display="flex" justifyContent="space-between">
+      <Box display="flex" flexDirection="column" flex={1}>
+        <HeaderAppBar mainTopics={mainTopics} />
+        <Outlet />
+      </Box>
+      <Box display="flex" flexDirection="column" alignItems="flex-start">
+        <KeywordList subTopics={subTopics} />
+      </Box>
+    </Box>
   );
 };
 

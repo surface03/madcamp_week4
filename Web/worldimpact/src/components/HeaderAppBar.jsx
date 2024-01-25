@@ -12,7 +12,8 @@ const HeaderAppBar = ({
   const navigate = useNavigate();
 
   const gradientStyle = {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    width: '1234px'
   };
 
   // Check if the user is logged in
@@ -48,6 +49,7 @@ const HeaderAppBar = ({
         <Toolbar>
           <TopicTabs
             mainTopics={mainTopics}
+            style={{ marginLeft: '50px' }}
           />
 
           {isLoggedIn ? (

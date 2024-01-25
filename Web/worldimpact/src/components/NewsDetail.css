@@ -1,0 +1,4 @@
+.word-info-text {
+    word-wrap: break-word; /* Ensure long words do not overflow */
+    text-align: justify; /* For better alignment */
+  }

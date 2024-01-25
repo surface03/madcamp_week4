@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, useNavigate } from 'react-router-dom';
 import { Tabs, Row, Col, Button, Card } from 'antd';
+const { Meta } = Card;
+import './NewsItem.css';
 import { Menu, Item, contextMenu } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
 
 import axios from 'axios';
 
 const NewsItem = ({ newsItem }) => {
-
   const [tags, setTags] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTags = async () => {
@@ -17,41 +19,50 @@ const NewsItem = ({ newsItem }) => {
         setTags(response.data);
       } catch (error) {
         console.error('Error fetching tags:', error);
-        // Handle errors (e.g., show a notification)
       }
     };
     fetchTags();
   }, [newsItem.uid]);
 
-
   const handleContextMenu = (event) => {
     event.preventDefault();
     contextMenu.show({
-      id: newsItem.uid,
+      id: `tags-menu-${newsItem.uid}`, // Dynamic ID based on newsItem.uid
       event: event,
       props: {
-        newsItem: newsItem,
-      },
+        newsItem: newsItem
+      }
     });
+  };
+
+  const navigateToTag = (tagId) => {
+    navigate(`/subtopics/${tagId}`);
   };
 
   return (
     <div onContextMenu={handleContextMenu}>
-      <Link to={`/news/${newsItem.uid}`}>
-        <img
-          src={newsItem.thumbnail}
-          alt={newsItem.title_text}
-          style={{ width: '70%' }}
+      <Card
+        hoverable
+        style={{ width: 230, margin: '20px' }}
+        cover={
+          <img
+            alt={newsItem.title_text}
+            src={newsItem.thumbnail}
+            style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+          />
+        }
+      >
+        <Meta
+          title={<Link to={`/news/${newsItem.uid}`}>{newsItem.title_text}</Link>}
+          description={newsItem.article_date}
         />
-        <h3>{newsItem.title_text}</h3>
-        <p>{newsItem.article_date}</p>
-      </Link>
+      </Card>
 
-      <Menu id={newsItem.uid}>
-        {/* newsItem.tags.map으로 수정, newsItem에는 tags가 있어야 된다. 위의 tags_example 형식*/}
+      {/* Dynamic Menu ID */}
+      <Menu id={`tags-menu-${newsItem.uid}`}>
         {tags.map((tag) => (
-          <Item key={tag.id}>
-            <Link to={`/subtopics/${tag.id}`}>{tag.tag}</Link>
+          <Item key={tag.id} onClick={() => navigateToTag(tag.id)}>
+            {tag.tag}
           </Item>
         ))}
       </Menu>

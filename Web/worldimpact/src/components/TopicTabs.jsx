@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Link, useNavigate, useLocation } from "react-router-dom";
 import { Tabs, Row, Col, Button } from "antd";
+import './TopicTabs.css';
 
 const TopicTabs = ({
   mainTopics,
+  style = {}
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,6 +45,8 @@ const TopicTabs = ({
           // Add content or other properties if needed
         })),
       ]}
+      style={style}
+      className="custom-tabs"
     />
   );
 };

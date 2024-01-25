@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import { Tabs, Row, Col, Button as AntButton} from 'antd';
 import Axios from 'axios';
 
+import './NewsDetail.css'
+
 // GPT 연동
 import OpenAI from 'openai';
 const openai = new OpenAI({apiKey: import.meta.env.VITE_OPENAI_API_KEY, dangerouslyAllowBrowser: true});
