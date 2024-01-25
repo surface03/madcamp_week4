@@ -159,14 +159,26 @@ const MyPage = () => {
 
   // ChatGPT 연동
   const handleButtonClick = async () => {
-    
-    // 해결해야할 문제: randomText 설정 어떻게?? 음... json파일 넣어버리고, user 정보 넣어버리고, 중립을 지키기 위해서 나의 성향과 어떤 방향으로 기사를 읽어야 하는지 알려달라하면 되남??? 
-    const randomText = '집에 보내줘...'; // 랜덤 텍스트 생성 로직 추가
-    const completion = await openai.chat.completions.create({
-        messages: [{ role: "system", content: randomText }],
+    console.log('GPT 실행')
+    // Constructing a string with user's information and tag logs
+    let userInfo = `User Information:\nName: ${user.name}\nID: ${user.id}\nAge: ${user.age}\nGender: ${user.gender}\nPolitical Orientation: ${user.politicalOrientation}\n\nTag Logs:\n`;
+    tagLogs.forEach(log => {
+      userInfo += `Tag: ${log.tag}, Count: ${log.count}\n`;
+    });
+
+    // Here you can modify or add more to the text as per your requirement
+    userInfo += "\nI would like to get an analysis based on my profile and interests. Can you provide insights?\nPlease answer in Korean.";
+      
+    try {
+      const completion = await openai.chat.completions.create({
+        messages: [{ role: "system", content: userInfo }],
         model: "gpt-3.5-turbo",
       });
-    setRandomText(completion.choices[0].message.content);
+      setRandomText(completion.choices[0].message.content);
+    } catch (error) {
+      console.error('Error with OpenAI:', error);
+      setRandomText("Sorry, there was an error processing your request.");
+    }
   };
 
   return (
@@ -223,13 +235,17 @@ const MyPage = () => {
         <TextField
           value={randomText}
           fullWidth
+          multiline
+          rows={5} // You can adjust the number of rows as needed
           variant="outlined"
           InputProps={{
             style: {
               backgroundColor: 'white',
               borderColor: '#ced4da',
               borderRadius: '4px',
-              padding: '10px'
+              padding: '10px',
+              overflow: 'auto', // Enable scrolling
+              height: '150px', // Set a fixed height
             }
           }}
           style={{ margin: '10px 0' }}

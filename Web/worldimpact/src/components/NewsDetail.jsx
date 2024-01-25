@@ -48,7 +48,7 @@ const NewsDetail = () => {
       }
     }
     logClick();
-  }, []);
+  }, [uid]);
 
   const handleWordClick = (word) => {
     setClickedWords([...clickedWords, word]);
