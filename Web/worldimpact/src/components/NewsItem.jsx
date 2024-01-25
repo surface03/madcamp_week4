@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, useNavigate } from 'react-router-dom';
 import { Tabs, Row, Col, Button, Card } from 'antd';
 const { Meta } = Card;
 import './NewsItem.css';
@@ -10,6 +10,7 @@ import axios from 'axios';
 
 const NewsItem = ({ newsItem }) => {
   const [tags, setTags] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTags = async () => {
@@ -34,6 +35,10 @@ const NewsItem = ({ newsItem }) => {
     });
   };
 
+  const navigateToTag = (tagId) => {
+    navigate(`/subtopics/${tagId}`);
+  };
+
   return (
     <div onContextMenu={handleContextMenu}>
       <Card
@@ -56,8 +61,8 @@ const NewsItem = ({ newsItem }) => {
       {/* Dynamic Menu ID */}
       <Menu id={`tags-menu-${newsItem.uid}`}>
         {tags.map((tag) => (
-          <Item key={tag.id}>
-            <Link to={`/subtopics/${tag.id}`}>{tag.tag}</Link>
+          <Item key={tag.id} onClick={() => navigateToTag(tag.id)}>
+            {tag.tag}
           </Item>
         ))}
       </Menu>
