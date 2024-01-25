@@ -4,8 +4,7 @@
   }
   
   .animated-button {
-    margin-left: 10px;
-    transition: transform 0.3s ease;
+    margin-left: auto;
   }
   
   .animated-button:hover {

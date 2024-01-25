@@ -79,6 +79,7 @@ const HeaderAppBar = ({
           )}
         </Toolbar>
       </AppBar>
+      <div style={{ marginTop: '64px' }}></div>
     </>
   );
 };
