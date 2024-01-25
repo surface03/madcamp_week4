@@ -18,7 +18,7 @@ const NewsDetail = () => {
         }
         const data = await response.json();
         setArticle({
-          picture: data.thumbnail, // assuming thumbnail URL is stored in the thumbnail field
+          picture: data.thumbnail, 
           title: data.title_text,
           date: data.article_date,
           body: data.body_text,
@@ -48,7 +48,7 @@ const NewsDetail = () => {
       }
     }
     logClick();
-  }, []);
+  }, [uid]);
 
   const handleWordClick = (word) => {
     setClickedWords([...clickedWords, word]);
@@ -60,6 +60,7 @@ const NewsDetail = () => {
         {word}
       </span>
     ));
+    console.log(word);
   };
 
   if (!article) {

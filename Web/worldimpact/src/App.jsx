@@ -28,6 +28,7 @@ import {
 
 import Logo from "./images/sample_logo.png";
 import { useNavigate } from "react-router-dom";
+import BackGround from "./images/background.png"
 
 import "./App.css";
 
@@ -61,6 +62,7 @@ const LayoutWithJustBar = () => {
           </Button>
         </Toolbar>
       </AppBar>
+      <div style={{ marginTop: '64px' }}></div>
       <Outlet />
     </>
   );
@@ -98,6 +100,11 @@ const LayoutWithHeader = () => {
 };
 
 const App = () => {
+  const style = {
+    backgroundImage: 'url(./images/background.png)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  };
   return (
     <BrowserRouter>
       <Routes>
@@ -113,7 +120,7 @@ const App = () => {
         </Route>
 
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/signup" element={<RegisterPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -183,7 +183,7 @@ const AuthForm = ({ type, formData, onChange, onGenderChange, onPoliticalChange,
       </form>
       <Footer>
         {type === 'login' ? (
-          <Link to="/register">Sign up</Link>
+          <Link to="/signup">Sign up</Link>
         ) : (
           <Link to="/login">Login</Link>
         )}

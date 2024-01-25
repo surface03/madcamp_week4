@@ -3,9 +3,12 @@
 // 2] GPT 연동 마지막에 해야할 듯???
 
 import React, { useState, useEffect, useRef } from "react";
-import { Grid, Typography, Button, TextField } from '@mui/material';
+import { Card, CardContent, Grid, Typography, Button, TextField, Box } from '@mui/material';
 import { Tabs, Row, Col, Button as AntButton } from "antd";
 import ApexCharts from 'apexcharts';
+import MaleIcon from '@mui/icons-material/Male';
+import FemaleIcon from '@mui/icons-material/Female';
+import './MyPage.css';
 
 // GPT 연동
 import OpenAI from 'openai';
@@ -23,6 +26,14 @@ const MyPage = () => {
   const [tagLogs, setTagLogs] = useState([]);
   const chartRef = useRef(null);
   const chartInstance = useRef(null); // Ref for the chart instance
+
+  const getGenderIcon = (gender) => {
+    switch (gender.toLowerCase()) {
+      case 'male': return <MaleIcon />;
+      case 'female': return <FemaleIcon />;
+      default: return null;
+    }
+  };
 
 
   // Function to fetch user data from the server
@@ -85,7 +96,30 @@ const MyPage = () => {
   chartInstance.current = new ApexCharts(chartRef.current, {
     chart: {
       type: 'bar',
+      background: '#ffffff',
+      animations: {
+        enabled: true,
+        easing: 'easeinout',
+        speed: 800,
+        animateGradually: {
+          enabled: true,
+          delay: 150
+        },
+        dynamicAnimation: {
+          enabled: true,
+          speed: 350
+        }
+      }
     },
+    plotOptions: {
+      bar: {
+        distributed: true,
+        horizontal: false,
+        columnWidth: '55%',
+        endingShape: 'rounded'
+      },
+    },
+    colors: ['#33b2df', '#546E7A', '#d4526e', '#13d8aa', '#A5978B', '#2b908f', '#f9a3a4', '#90ee7e', '#f48024', '#69d2e7'],
     series: [{
       name: 'Tag Count',
       data: []
@@ -125,31 +159,97 @@ const MyPage = () => {
 
   // ChatGPT 연동
   const handleButtonClick = async () => {
-    
-    // 해결해야할 문제: randomText 설정 어떻게?? 음... json파일 넣어버리고, user 정보 넣어버리고, 중립을 지키기 위해서 나의 성향과 어떤 방향으로 기사를 읽어야 하는지 알려달라하면 되남??? 
-    const randomText = '집에 보내줘...'; // 랜덤 텍스트 생성 로직 추가
-    const completion = await openai.chat.completions.create({
-        messages: [{ role: "system", content: randomText }],
+    console.log('GPT 실행')
+    // Constructing a string with user's information and tag logs
+    let userInfo = `User Information:\nName: ${user.name}\nID: ${user.id}\nAge: ${user.age}\nGender: ${user.gender}\nPolitical Orientation: ${user.politicalOrientation}\n\nTag Logs:\n`;
+    tagLogs.forEach(log => {
+      userInfo += `Tag: ${log.tag}, Count: ${log.count}\n`;
+    });
+
+    // Here you can modify or add more to the text as per your requirement
+    userInfo += "\nI would like to get an analysis based on my profile and interests. Can you provide insights?\nPlease answer in Korean.";
+      
+    try {
+      const completion = await openai.chat.completions.create({
+        messages: [{ role: "system", content: userInfo }],
         model: "gpt-3.5-turbo",
       });
-    setRandomText(completion.choices[0].message.content);
+      setRandomText(completion.choices[0].message.content);
+    } catch (error) {
+      console.error('Error with OpenAI:', error);
+      setRandomText("Sorry, there was an error processing your request.");
+    }
   };
 
   return (
     <Grid container spacing={2}>
-      <Grid item xs={6}>
-        <Typography variant="h6">ID: {user.id}</Typography>
-        <Typography>Name: {user.name}</Typography>
-        <Typography>Age: {user.age}</Typography>
-        <Typography>Gender: {user.gender}</Typography>
-        <Typography>PoliticalOrientation: {user.politicalOrientation}</Typography>
+      <Grid item xs={12} md={6}>
+        <Card className="card-container">
+          <CardContent>
+            <Grid container spacing={1}>
+              <Grid item xs={6}>
+                <div className="info-label">Name:</div>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="h5" style={{ fontWeight: 'bold' }}>{user.name}</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <div className="info-label">ID:</div>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography variant="h6" style={{ fontWeight: 'bold' }}>{user.id}</Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <div className="info-label">Age:</div>
+              </Grid>
+              <Grid item xs={6}>
+              <Typography variant="h6" style={{ fontWeight: 'bold' }}>{user.name}</Typography>
+              </Grid>
+              {/* Gender with icon */}
+              <Grid item xs={6}>
+                <div className="info-label">Gender:</div>
+              </Grid>
+              <Grid item xs={6}>
+                <div className="info-value">{getGenderIcon(user.gender)}</div>
+              </Grid>
+              {/* Highlighted Political Orientation */}
+              <Grid item xs={6}>
+                <div className="info-label">Political Orientation:</div>
+              </Grid>
+              <Grid item xs={6}>
+                <Box bgcolor="yellow" p={1} borderRadius={2} className="info-value">
+                  {user.politicalOrientation}
+                </Box>
+              </Grid>
+              {/* Add more fields as needed */}
+            </Grid>
+          </CardContent>
+        </Card>
       </Grid>
+
       <Grid item xs={6}>
         <div ref={chartRef}></div>
       </Grid>
       <Grid item xs={12}>
-        <AntButton onClick={handleButtonClick}>Generate Random Text</AntButton>
-        <TextField value={randomText} fullWidth />
+        <AntButton onClick={handleButtonClick}>나의 성향 분석</AntButton>
+        <TextField
+          value={randomText}
+          fullWidth
+          multiline
+          rows={5} // You can adjust the number of rows as needed
+          variant="outlined"
+          InputProps={{
+            style: {
+              backgroundColor: 'white',
+              borderColor: '#ced4da',
+              borderRadius: '4px',
+              padding: '10px',
+              overflow: 'auto', // Enable scrolling
+              height: '150px', // Set a fixed height
+            }
+          }}
+          style={{ margin: '10px 0' }}
+        />
       </Grid>
     </Grid>
   );
