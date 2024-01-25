@@ -1,0 +1,7 @@
+{
+    "host": "172.10.7.52",
+    "user": "test2",
+    "password": "password",
+    "database": "login",
+    "port": 80
+}

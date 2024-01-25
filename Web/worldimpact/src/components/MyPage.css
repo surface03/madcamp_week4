@@ -1,0 +1,51 @@
+body {
+    background-color: #f0f2f5;
+    /* Light background for the whole page */
+}
+
+.card-container {
+    background-color: #ffffff;
+    /* White background */
+    border-radius: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.card-container:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
+}
+
+.card-title {
+    font-family: 'Montserrat', sans-serif;
+    color: #333333;
+    /* Dark text color */
+    font-weight: 600;
+}
+
+.card-content {
+    font-family: 'Roboto', sans-serif;
+    color: #555555;
+    /* Lighter text color */
+    font-weight: 400;
+}
+
+.info-label {
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.info-value {
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-left: 50px;
+    margin-right: 50px;
+  align-items: center;
+  justify-content: start;
+}

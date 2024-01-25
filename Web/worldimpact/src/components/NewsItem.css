@@ -1,0 +1,17 @@
+.news-tag {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px 10px;
+    background-color: #f0f2f5; /* Light background for tags */
+    border-radius: 15px;
+    transition: background-color 0.3s ease; /* Smooth background transition */
+  }
+  
+  .news-tag:hover {
+    background-color: #1890ff; /* Change color on hover */
+    color: white;
+  }
+  
+  .tags-container {
+    margin-top: 10px; /* Space above the tags */
+  }

@@ -1,0 +1,49 @@
+.center-aligned-text {
+    text-align: center;
+  }
+  .keyword-list-spacer {
+    height: 300px; /* Height of the spacer */
+  }
+  
+  /* If you're using Material-UI v4 or later, you might need to target the span element directly */
+  .center-aligned-text .MuiListItemText-primary {
+    text-align: center;
+  }
+
+  .keyword-list-bar {
+    position: sticky;
+  top: 0; /* Adjust as necessary */
+  z-index: 1000; /* Ensures it stays above other content */
+  margin-top: 300px;
+    background-color: #f5f5f5; /* Light grey background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    /* margin: auto; */
+    width: 150px; /* Adjust width as needed */
+  }
+  
+  .keyword-list-header {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333; /* Dark text for contrast */
+  }
+  
+  .keyword-list {
+    background-color: white;
+    border-radius: 5px;
+  }
+  
+  .center-aligned-text {
+    text-align: center;
+  }
+  
+  /* Style for the ListItem */
+  .MuiListItem-button {
+    border-bottom: 1px solid #ddd; /* Adds a light border to each list item */
+  }
+  
+  .MuiListItem-button:hover {
+    background-color: #eaeaea; /* Light hover effect */
+  }
+  

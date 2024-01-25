@@ -1,0 +1,16 @@
+.custom-tabs .ant-tabs-tab {
+    font-size: 20px; /* Increase font size */
+    padding: 12px 16px; /* Adjust padding for a neater look */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transitions for hover */
+  }
+  
+  .custom-tabs .ant-tabs-tab:hover {
+    background-color: #f0f0f0; /* Slight background color change on hover */
+    transform: translateY(-2px); /* Subtle lift effect */
+  }
+  
+  .custom-tabs .ant-tabs-tab.ant-tabs-tab-active {
+    color: #1890ff; /* Highlight color for active tab */
+    font-weight: bold; /* Make active tab text bolder */
+  }
+  
