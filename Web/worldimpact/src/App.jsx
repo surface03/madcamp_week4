@@ -20,6 +20,7 @@ import NewsDetail from "./components/NewsDetail";
 import TopicTabs from "./components/TopicTabs";
 import NewsGrid from "./components/NewsGrid";
 import MyPage from "./components/MyPage";
+import MainPage from "./components/MainPage";
 import {
   exampleMainTopics,
   exampleSubTopics,
@@ -109,7 +110,7 @@ const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LayoutWithHeader />}>
-          {/* <Route index element={<MainPage />} /> */}
+          <Route index element={<MainPage />} />
           <Route path="tab/:tabkey" element={<NewsGrid />} />
           <Route path="subtopics/:tagUid" element={<SubTopicNews />} />
         </Route>
