@@ -63,6 +63,8 @@ const NewsDetail = () => {
     fetchWordInfo(word);
   };
   
+
+  // 여기에 GPT 용어에 대한 해석을 보여주면 될듯??
   const fetchWordInfo = async (word) => {
     // Placeholder for fetching word information
     // Replace this with your actual logic to fetch word info
@@ -121,7 +123,7 @@ const NewsDetail = () => {
             </List>
           </CardContent>
         </Card>
-        
+
         {selectedWord && (
           <Card sx={{ maxWidth: 300, margin: 'auto', marginTop: 2 }}>
             <CardContent>
