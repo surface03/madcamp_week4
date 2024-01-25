@@ -4,6 +4,7 @@ import { Tabs, Row, Col, Button } from "antd";
 
 const TopicTabs = ({
   mainTopics,
+  style = {}
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -43,6 +44,7 @@ const TopicTabs = ({
           // Add content or other properties if needed
         })),
       ]}
+      style={style}
     />
   );
 };

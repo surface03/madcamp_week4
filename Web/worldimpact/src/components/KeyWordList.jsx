@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { List, ListItem, ListItemText, Typography } from '@mui/material';
 import { Link } from 'react-router-dom'; // or your preferred method for navigation
 import axios from "axios";
+import './KeyWordList.css'
 
 const fetchSubTopic = async () => {
     try {
@@ -28,19 +29,21 @@ function KeywordList() {
       fetchData();
     }, []);
 
-  return (
-    <div>
-      <Typography variant="h6" style={{ textAlign: 'center' }}>
-        List Title
-        </Typography>
-    <List>
-      {subTopics.slice(0, 10).map((subTopic) => (
-        <ListItem button key={subTopic.id} component={Link} to={`/subtopics/${subTopic.id}`}>
-          <ListItemText primary={subTopic.name} />
-        </ListItem>
-      ))}
-    </List>
-    </div>
+    return (
+      <>
+      <div className="keyword-list-bar">
+          <Typography variant="h5" className="keyword-list-header">
+              Top 10
+          </Typography>
+          <List className="keyword-list">
+              {subTopics.slice(0, 10).map((subTopic) => (
+                  <ListItem button key={subTopic.id} component={Link} to={`/subtopics/${subTopic.id}`}>
+                      <ListItemText primary={subTopic.name} className="center-aligned-text" />
+                  </ListItem>
+              ))}
+          </List>
+      </div>
+      </>
   );
 
   
