@@ -51,16 +51,19 @@ const NewsDetail = () => {
   }, [uid]);
 
   const handleWordClick = (word) => {
-    setClickedWords([...clickedWords, word]);
+    const newClickedWords = [...clickedWords, word];
+    setClickedWords(newClickedWords);
+  
+    // Log the updated clickedWords array to the console
+    console.log('Clicked Words:', newClickedWords);
   };
-
+  
   const renderBody = (body) => {
     return body.split(' ').map((word, index) => (
       <span key={index} onClick={() => handleWordClick(word)} style={{ cursor: 'pointer', marginRight: '5px' }}>
         {word}
       </span>
     ));
-    console.log(word);
   };
 
   if (!article) {
