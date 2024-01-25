@@ -5,9 +5,11 @@ import { useParams } from 'react-router-dom';
 import Axios from 'axios';
 
 const NewsDetail = () => {
-  const { uid } = useParams(); // Get the uid parameter
+  const { uid } = useParams();
   const [article, setArticle] = useState(null);
   const [clickedWords, setClickedWords] = useState([]);
+  const [selectedWord, setSelectedWord] = useState(null);
+  const [wordInfo, setWordInfo] = useState(null);
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -56,8 +58,19 @@ const NewsDetail = () => {
   
     // Log the updated clickedWords array to the console
     console.log('Clicked Words:', newClickedWords);
+
+    setSelectedWord(word);
+    fetchWordInfo(word);
   };
   
+  const fetchWordInfo = async (word) => {
+    // Placeholder for fetching word information
+    // Replace this with your actual logic to fetch word info
+    const info = `Information about ${word}`;
+    setWordInfo(info);
+  };  
+
+
   const renderBody = (body) => {
     return body.split(' ').map((word, index) => (
       <span key={index} onClick={() => handleWordClick(word)} style={{ cursor: 'pointer', marginRight: '5px' }}>
@@ -108,6 +121,20 @@ const NewsDetail = () => {
             </List>
           </CardContent>
         </Card>
+        
+        {selectedWord && (
+          <Card sx={{ maxWidth: 300, margin: 'auto', marginTop: 2 }}>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Info about "{selectedWord}"
+              </Typography>
+              <Typography variant="body2">
+                {wordInfo}
+              </Typography>
+            </CardContent>
+          </Card>
+        )}
+
       </Grid>
     </Grid>
   );
