@@ -27,6 +27,21 @@ function MainPage() {
     loadTopNews();
   }, []);
 
+  function getOrdinalSuffix(i) {
+    const j = i % 10,
+          k = i % 100;
+    if (j === 1 && k !== 11) {
+      return 'st';
+    }
+    if (j === 2 && k !== 12) {
+      return 'nd';
+    }
+    if (j === 3 && k !== 13) {
+      return 'rd';
+    }
+    return 'th';
+  }
+
   if (news.length < 1) {
     return (
       <div>
@@ -40,15 +55,12 @@ function MainPage() {
     <div>
       <h1>Top 12 Hot News</h1>
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-        {news.map((item) => (
-          <ListItem key={item.uid} alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar alt="News Thumbnail" src={item.thumbnail} />
-            </ListItemAvatar>
-            <ListItemText
-              primary={<Link to={`/news/${item.uid}`}>{item.title_text}</Link>}
-              secondary={new Date(item.article_date).toLocaleDateString()}
-            />
+      {news.map((item, index) => (
+          <ListItem key={item.uid} alignItems="flex-start" divider>
+            <Typography variant="subtitle1" sx={{ marginRight: 2 }}>
+              {`${index + 1}${getOrdinalSuffix(index + 1)}`} {/* Ranking */}
+            </Typography>
+            <NewsItem newsItem = {item}/>
           </ListItem>
         ))}
       </List>
