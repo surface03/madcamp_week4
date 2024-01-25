@@ -8,17 +8,29 @@ import {
   Avatar,
 } from '@mui/material';
 
+import axios from '../../node_modules/axios/index';
+
 function MainPage() {
   const [news, setNews] = useState([]);
 
   useEffect(() => {
     // top 10 news 데이터 받아오기, news에 저장
+    const loadTopNews = async() => {
+      try{
+        const response = await axios.get('http://localhost:3000/news/mostStatedArticle');
+        const articles = response.data;
+        setNews(articles);
+      } catch (error){
+        console.error('Error fetching Top News', error);
+      }
+    };
+    loadTopNews();
   }, []);
 
   if (news.length < 1) {
     return (
       <div>
-        <h1>Top 10 Hot News</h1>
+        <h1>Top 12 Hot News</h1>
         <h4>Loading...</h4>
       </div>
     );
@@ -26,7 +38,7 @@ function MainPage() {
 
   return (
     <div>
-      <h1>Top 10 Hot News</h1>
+      <h1>Top 12 Hot News</h1>
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
         {news.map((item) => (
           <ListItem key={item.uid} alignItems="flex-start">
