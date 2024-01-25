@@ -51,8 +51,17 @@ const SubTopicNews = () => {
   const handleButtonClick = async () => {
     console.log('GPT 실행');
   
-    // Limit the number of titles or shorten them
-    let titles = newsItems.slice(0, 50).map(item => item.title_text).join('. ');
+    const totalItems = newsItems.length;
+    const itemCount = 50; // Total items you want to pick
+    const interval = Math.floor(totalItems / itemCount);
+    
+    let selectedTitles = [];
+    
+    for (let i = 0; i < totalItems && selectedTitles.length < itemCount; i += interval) {
+      selectedTitles.push(newsItems[i].title_text);
+    }
+    
+    let titles = selectedTitles.join('. ') + '.';
   
     // Construct the request payload
     const payload = {
