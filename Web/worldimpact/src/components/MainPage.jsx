@@ -6,7 +6,9 @@ import {
   ListItemText,
   ListItemAvatar,
   Avatar,
+  Typography
 } from '@mui/material';
+import NewsItem from './NewsItem';
 
 import axios from '../../node_modules/axios/index';
 
@@ -52,7 +54,13 @@ function MainPage() {
   }
 
   return (
-    <div>
+    <div style={{
+      display: 'flex',        // Enables flexbox
+      flexDirection: 'column', // Stack items vertically
+      justifyContent: 'center', // Center items vertically
+      alignItems: 'center',     // Center items horizontally
+      textAlign: 'center',      // Center text
+    }}>
       <h1>Top 12 Hot News</h1>
       <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       {news.map((item, index) => (
